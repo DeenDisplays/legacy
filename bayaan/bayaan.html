@@ -1,0 +1,68 @@
+<!DOCTYPE html/>
+<html>
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<meta name="viewport" content=" user-scalable=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="bayaan.css?3">
+  <script src="jquery-1.11.3.min.js"></script>
+  <script src="slider.js"></script>
+  <script src="time.js"></script>
+  <script>
+    $(document).ready(function() {
+      setTimesWithTimes('/announcements/bayaanTimes.csv', [25,10,10,10,10]);
+      loadContent("160192666@N07","72157690150170895");
+    });
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="row">
+        <div class="col-xs-8" id="announcements">
+        </div>
+        <div class="col-xs-4" id="classes">
+          <div>
+            <h1>Classes at the Masjid</h1>
+          </div>
+        </div>
+    </div>
+    <div class="prayerTimes row">
+        <div class="col-xs-2" id="fajr">
+          <span class="title">Fajr</span>
+          <br/>
+          <span class="title" id="fajrTime"></span>
+        </div>
+        <div class="col-xs-2" id="dhuhr">
+          <span class="title">Dhuhr</span>
+          <br/>
+          <span class="title" id="dhuhrTime"></span>
+        </div>
+        <div class="col-xs-2" id="asr">
+          <span class="title">'Asr</span>
+          <br/>
+          <span class="title" id="asrTime"></span>
+        </div>
+        <div class="col-xs-2" id="maghrib">
+          <span class="title">Maghrib</span>
+          <br/>
+          <span class="title" id="maghribTime"></span>
+        </div>
+        <div class="col-xs-2" id="isha">
+          <span class="title">'Isha</span>
+          <br/>
+          <span class="title" id="ishaTime"></span>
+        </div>
+        <div class="col-xs-2" id="jumah">
+          <strong>
+            <span class="title">Jum'ah</span>
+            <br/>
+            <span class="title" id="jummahTime">1:00 PM</span>
+          </strong>
+        </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+body {
+  background-color: black;
+  color: white;
+  text-align:center;
+  font-size: 15px;
+  font-family: 'Anton', sans-serif;
+  margin: 10px;
+  height: 100%;
+}
+
+.h1, .h2, h1, h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+#announcements {
+  position: relative;
+  height: 100%;
+}
+
+#announcements > div{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+#announcements > div img{
+  max-height: 100%;
+  max-width: 100%;
+  top: 50%;
+  transform: translate(0px, -50%);
+  position: relative;
+}
+
+#container {
+  height: 80%;
+}
+
+#classes {
+  display: table;
+  height: 100%
+}
+
+#classes > div {
+  display: table-row;
+}
+
+#classes > div h1{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+#classes > div h1{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.prayerTimes {
+  text-align: center;
+  font-size: 2em;
+  margin: 10px -20px;
+  background: -webkit-linear-gradient(top, #000 0%,#0222DA 100%);
+}
