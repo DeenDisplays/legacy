@@ -5,14 +5,14 @@
 <meta name="viewport" content=" user-scalable=no">
 
   <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="bayaan.css?3">
-  <script src="jquery-1.11.3.min.js"></script>
-  <script src="slider.js"></script>
-  <script src="time.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="/common/slider.js"></script>
+  <script src="/common/time.js"></script>
   <script>
     $(document).ready(function() {
-      setTimesWithTimes('/announcements/bayaanTimes.csv', [25,10,10,10,10]);
+      setTimesWithTimes('bayaanTimes.csv', [25,10,10,10,10]);
       loadContent("160192666@N07","72157690150170895");
     });
   </script>
