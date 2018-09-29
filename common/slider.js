@@ -23,12 +23,13 @@ function loadContent(user, album) {
 
 function loadBenefits() {
   var parentDiv = document.getElementById("benefits");
-  benefits = $.get("benefits.json?2").success( function(data) { 
+  benefits = $.get("../common/benefits.json?2").success( function(data) { 
     data.list.forEach(function(benefit) {
       var div = document.createElement('div');
       var content =  document.createElement('p');
       var source =  document.createElement('p');
-      div.style.marginTop = 30 - benefit.content.length / 10;
+      var height = $("#benefits").parent().height() / 3;
+      div.style.marginTop = height - benefit.content.length / 4;
       content.className = 'benefit-content';
       content.textContent = benefit.content;
       source.className = 'benefit-source';

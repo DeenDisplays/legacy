@@ -65,7 +65,40 @@ h2 {
 
 .prayerTimes {
   text-align: center;
-  font-size: 2em;
-  margin: 10px -20px;
+  font-size: 1.5em;
   background: -webkit-linear-gradient(top, #000 0%,#0222DA 100%);
+  position: absolute;
+  width: 102%;
+  bottom: 0px;
 }
+
+#benefits
+{
+  text-align: center;
+  color: white;
+  position: relative;
+  display: block;
+}
+
+#benefits div {
+  position:absolute;
+  width: 100%;
+  padding: 0px 40px 0px 5px;
+}
+
+.benefit-source
+{
+  font-size: 1em;
+  text-align: right;
+}
+
+.benefit-content
+{
+  font-size: 1.2em;
+}
+
+#benefits > div:first-child
+{
+  display:block;
+}
+
