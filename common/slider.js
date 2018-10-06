@@ -11,7 +11,7 @@ function Divs(divs) {
 
 $(function () {
   setInterval(function () { Divs($('#announcements div')) }, 10000);
-  setInterval(function () { Divs($('#benefits div')) }, 13000);
+  setInterval(function () { Divs($('#benefits div')) }, 41000);
 });
 
 function loadContent(user, album) {
