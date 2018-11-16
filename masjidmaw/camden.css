@@ -1,0 +1,36 @@
+body {
+  background-image: url("https://farm5.staticflickr.com/4549/38511440366_856b9df486_o_d.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: black;
+  color: white;
+  text-align:center;
+  font-size: 15px;
+  font-family: 'Playball', cursive;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+h2 {
+  font-size: 3em;
+}
+
+h3 {
+  font-size: 2em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+.prayerTimes {
+  text-align: center;
+  font-size: 2em;
+}

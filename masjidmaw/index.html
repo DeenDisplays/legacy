@@ -1,0 +1,96 @@
+<!DOCTYPE html/>
+<html>
+<head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<meta name="viewport" content=" user-scalable=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Playball" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="camden.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="../common/time.js"></script>
+  <script src="../common/hijricalendar-kuwaiti.js"></script>
+  <script>
+    $(document).ready(function() {
+      setTimesWithTimes('times.csv', [0,0,0,0,0]);
+      setClock();
+      setInterval(setClock, 60000);
+      setDate();
+      setInterval(setDate, 3600000);
+      setInterval(refreshDaily, 3600000);
+    });
+  </script>
+</head>
+<body>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <h1>Masjid Muhammad Abdul-Wahhab</h1>
+    </div>
+    <div class="col-xs-6">
+      <h3><span id="gregorianDate">December 1, 2017</span></h3>
+      <h3><span id="hijriDate">Rabi' al Awwal 2 1439</span></h3>
+      <h2><span id="clock">12:00 AM</span</h1>
+    </div>
+  </div>
+
+<div style="height:3em"></div>
+
+  <div class="row">
+    <h2>
+      Friday Classes at the Masjid
+    </h2>
+  </div>
+
+<div style="height:1em"></div>
+
+  <div class="row">
+    <div class="col-xs-5 col-xs-offset-1">
+      <h3>Before Maghrib: The Radiant Pearls by al-Shawkani</h4>
+    </div>
+    <div class="col-xs-5">
+      <h3>After Maghrib: The Sickness and the Cure by ibn al-Qayyim</h4>
+    </div>
+  </div>
+
+
+<div style="height:3em"></div>
+
+  <div class="prayerTimes row">
+      <div class="col-xs-2" id="fajr">
+        <span class="title">Fajr</span>
+        <br/>
+        <span class="title" id="fajrTime"></span>
+      </div>
+      <div class="col-xs-2" id="dhuhr">
+        <span class="title">Dhuhr</span>
+        <br/>
+        <span class="title" id="dhuhrTime"></span>
+      </div>
+      <div class="col-xs-2" id="asr">
+        <span class="title">'Asr</span>
+        <br/>
+        <span class="title" id="asrTime"></span>
+      </div>
+      <div class="col-xs-2" id="maghrib">
+        <span class="title">Maghrib</span>
+        <br/>
+        <span class="title" id="maghribTime"></span>
+      </div>
+      <div class="col-xs-2" id="isha">
+        <span class="title">'Isha</span>
+        <br/>
+        <span class="title" id="ishaTime"></span>
+      </div>
+      <div class="col-xs-2" id="jumah">
+        <strong>
+          <span class="title">Jum'ah</span>
+          <br/>
+          <span class="title" id="jummahTime">1:00 PM</span>
+        </strong>
+      </div>
+  </div>
+
+
+</body>
+</html>

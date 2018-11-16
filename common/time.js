@@ -62,7 +62,7 @@ function getIqamahTime(athanTime, offset) {
 
 function setClock() {
   var now = new Date();
-  $("#clock").html(getIqamahTime(now.getHours() + ":" + now.getMinutes(), -240));
+  $("#clock").html(getIqamahTime(now.getHours() + ":" + now.getMinutes(), 0));
 }
 
 
