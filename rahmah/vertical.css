@@ -6,6 +6,7 @@ body {
   font-size: 10px;
   font-family: 'Redressed', cursive;
   height: 100%;
+  padding: 30px;
 }
 
 #fundraiser {
@@ -22,4 +23,19 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+}
+
+.prayerTimes {
+  padding: 15px 20px 0px 20px;
+  font-size: 4em;
+  color: #037;
+}
+
+.prayerTimes .col-xs-4 .row {
+  padding: 15px;
+}
+
+.classTimes {
+  font-size: 4em;
+  color: #073;
 }
