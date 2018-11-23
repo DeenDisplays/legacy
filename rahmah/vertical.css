@@ -3,10 +3,20 @@ body {
   background: -webkit-linear-gradient(top, #FFF 10%, #5AF 80%,#27E 100%);
   color: #000;
   text-align:center;
-  font-size: 10px;
-  font-family: 'Redressed', cursive;
+  font-size: 9px;
+  font-family: 'Oswald', sans-serif;
   height: 100%;
-  padding: 30px;
+  padding: 10px;
+}
+
+h1 {
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 4em;
+}
+
+h2 {
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 3em;
 }
 
 #fundraiser {
@@ -16,7 +26,7 @@ body {
 
 #announcements {
   position: relative;
-  height: 33%;
+  height: 40%;
 }
 
 #announcements > div{
@@ -26,16 +36,31 @@ body {
 }
 
 .prayerTimes {
-  padding: 15px 20px 0px 20px;
-  font-size: 4em;
-  color: #037;
+  padding: 0px;
+  margin: 0px;
+  font-size: 2.2em;
+  color: #005;
+  background: -webkit-radial-gradient(center, rgba(220,220,255,1) 10%, rgba(220,220,255,0.5) 40%, transparent 70%);
 }
 
-.prayerTimes .col-xs-4 .row {
-  padding: 15px;
+.prayerTimes > .row {
+  padding-bottom: .5em;
+}
+* > .row > div {
+  padding: 0px;
 }
 
 .classTimes {
-  font-size: 4em;
-  color: #073;
+  padding: 0px;
+  font-size: 2em;
+  color: #040;
+  background: -webkit-radial-gradient(center, rgba(220,255,220,1) 10%, rgba(220,255,220,0.5) 40%, transparent 70%);
+}
+
+body .row {
+  margin: 0px;
+}
+
+body * {
+  padding: 0px;
 }
