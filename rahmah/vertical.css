@@ -10,19 +10,27 @@ body {
 }
 
 h1 {
-  font-family: 'Berkshire Swash', cursive;
   font-size: 4em;
 }
 
 h2 {
-  font-family: 'Berkshire Swash', cursive;
   font-size: 3em;
 }
 
 #fundraiser {
   height: 33%;
+  font-family: 'Berkshire Swash', cursive;
+}
+#fundraiser > .progress {
+  height: 3.5em;
+  background: -webkit-linear-gradient(top, #999 10%, #CCC 20%,#FFF 100%);
 }
 
+#fundraiser > .progress > .progress-bar {
+  font-size: 2.5em;
+  color: black;
+  background: -webkit-linear-gradient(top, #FFF 10%, #5FA 80%,#2E7 100%);
+}
 
 #announcements {
   position: relative;
