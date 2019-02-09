@@ -1,0 +1,71 @@
+<!DOCTYPE html/>
+<html>
+<head>
+ <meta http-equiv="refresh" content="3600" />
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<meta name="viewport" content=" user-scalable=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="../common/style.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Redressed" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="../common/slider.js"></script>
+  <script src="../common/time.js"></script>
+  <script>
+    $(document).ready(function() {
+      setTimesWithTimes('times.csv', [10,20,20,10,10]);
+      loadContent("143644254@N08","72157667662302764");
+      loadBenefits();
+    });
+  </script>
+</head>
+<body>
+  <div class="row">
+    <div class="col-xs-3">
+                <a width="100%" height="100%" class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar transparent" data-dnt="true" href="https://twitter.com/1MMPGH" data-widget-id="572145965768142848">Tweets by @1MMPGH</a>
+                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
+    <div class="col-xs-6">
+      <div class="row"><h1>Welcome to al Masjid al Awwal</h1></div>
+      <div class="row">
+        <div class="col-xs-12" id="announcements"></div>
+      </div>
+      <div class="prayerTimes">
+        <div class="row">
+          <div class="col-xs-4" id="fajr">
+            <span class="title">Fajr</span>
+            <span class="title" id="fajrTime"></span>
+          </div>
+          <div class="col-xs-4" id="dhuhr">
+            <span class="title">Dhuhr</span>
+            <span class="title" id="dhuhrTime"></span>
+          </div>
+          <div class="col-xs-4" id="asr">
+            <span class="title">'Asr</span>
+            <span class="title" id="asrTime"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4" id="maghrib">
+            <span class="title">Maghrib</span>
+            <span class="title" id="maghribTime"></span>
+          </div>
+          <div class="col-xs-4" id="isha">
+            <span class="title">'Isha</span>
+            <span class="title" id="ishaTime"></span>
+          </div>
+          <div class="col-xs-4" id="jumah">
+            <strong>
+              <span class="title">Jum'ah</span>
+              <span class="title" id="jummahTime">1:00 PM</span>
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3" id="benefits"></div>
+  </div>
+</body>
+</html>
