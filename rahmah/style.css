@@ -7,3 +7,12 @@ body {
   font-family: 'Redressed', cursive;
   height: 100%;
 }
+
+#announcements > div img{
+  top: 6%;
+  transform: unset;
+}
+
+#announcements > div{
+  padding: 0px 10px 35px 0px;
+}
