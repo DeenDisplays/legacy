@@ -48,7 +48,7 @@ function loadBenefits() {
 function jsonFlickrApi(data) {
     var photos = data.photoset.photo;
     
-    for(var i = 0; i < photos.length; i++) {
+    for(var i = photos.length - 1; i >= 0; i--) {
       $("#announcements").append("<div class=\"slide\"><img src=\""+ getLink(photos[i]) + "\"/></div>");
       if(photos[i].title != "") {
         $("#classes").append("<div><h2>"+photos[i].title+"</h2></div>"); 
