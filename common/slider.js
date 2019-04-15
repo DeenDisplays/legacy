@@ -60,7 +60,7 @@ function jsonFlickrApi(data) {
 
 function getLink(photo) {
   console.log(photo);
-  return "https://farm" + photo.farm +
+  return "https://live" +
          ".staticflickr.com/" + photo.server + 
-         "/" + photo.id + "_" + photo.secret + "_h.jpg";
+         "/" + photo.id + "_" + photo.secret + "_b_d.jpg";
 }
