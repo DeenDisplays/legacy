@@ -12,10 +12,11 @@
   <link href="https://fonts.googleapis.com/css?family=Redressed" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="../common/slider.js"></script>
+  <script src="../common/PrayTimes.js"></script>
   <script src="../common/time.js"></script>
   <script>
     $(document).ready(function() {
-      setTimesWithTimes('times.csv', [33,20,20,7,15]);
+      setTimes([40.73, -74.18], -5, [30,20,20,10,10]);
       loadContent("144360725@N07","72157669935379135");
       loadBenefits();
     });
