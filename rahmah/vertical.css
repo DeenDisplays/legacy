@@ -18,7 +18,7 @@ h2 {
 }
 
 #fundraiser {
-  height: 33%;
+  height: 25%;
   font-family: 'Berkshire Swash', cursive;
 }
 #fundraiser > .progress {
@@ -34,7 +34,7 @@ h2 {
 
 #announcements {
   position: relative;
-  height: 40%;
+  height: 44%;
 }
 
 #announcements > div{
