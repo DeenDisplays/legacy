@@ -64,6 +64,8 @@ function refreshDaily() {
 
 function setTimes(coordinates, timezone, offsets) {
   var PT = new PrayTimes('ISNA');
-  var times = PT.getTimes(new Date(), coordinates, timezone);
+  var date = new Date();
+  date.setDate(date.getDate() - 1);
+  var times = PT.getTimes(date, coordinates, timezone);
   displayTimes([times.fajr, times.dhuhr, times.asr, times.maghrib, times.isha], offsets);
 }
