@@ -85,6 +85,9 @@ function PrayTimes(method) {
 		MWL: {
 			name: 'Muslim World League',
 			params: { fajr: 18, isha: 17 } },
+		Pittsburgh: {
+			name: 'al-Masjid al-Awwal',
+			params: { fajr: 12, isha: 12 } },
 		ISNA: {
 			name: 'Islamic Society of North America (ISNA)',
 			params: { fajr: 15, isha: 15 } },

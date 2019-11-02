@@ -9,10 +9,11 @@
   <link rel="stylesheet" href="bayaan.css?3">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="../common/slider.js"></script>
+  <script src="../common/PrayTimes.js"></script>
   <script src="../common/time.js"></script>
   <script>
     $(document).ready(function() {
-      setTimesWithTimes('bayaanTimes.csv', [25,10,10,10,10]);
+      setTimes([40.22, -74.02], -5, [25,10,10,10,10]);
       loadContent("160192666@N07","72157690150170895");
       loadBenefits();
     });

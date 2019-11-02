@@ -9,10 +9,11 @@
   <link rel="stylesheet" href="camden.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="../common/time.js"></script>
+  <script src="../common/PrayTimes.js"></script>
   <script src="../common/hijricalendar-kuwaiti.js"></script>
   <script>
     $(document).ready(function() {
-      setTimesWithTimes('times.csv', [0,0,0,0,0]);
+      setTimes([40.73, -74.18], -5, [0,0,0,0,0]);
       setClock();
       setInterval(setClock, 60000);
       setDate();
