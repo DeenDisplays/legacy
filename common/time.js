@@ -66,7 +66,6 @@ function setTimes(coordinates, timezone, offsets, givenMethod) {
   var method = (typeof givenMethod == 'undefined') ? 'ISNA' : givenMethod;
   var PT = new PrayTimes(method);
   var date = new Date();
-  date.setDate(date.getDate() - 1);
   var times = PT.getTimes(date, coordinates, timezone);
   displayTimes([times.fajr, times.dhuhr, times.asr, times.maghrib, times.isha], offsets);
 }
