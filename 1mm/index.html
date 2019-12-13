@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Redressed" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
   <script src="../common/slider.js"></script>
   <script src="../common/PrayTimes.js"></script>
   <script src="../common/time.js"></script>
@@ -19,16 +20,17 @@
       setTimes([40.44, -79.98], -5, [15,15,10,10,10], 'Pittsburgh');
       loadContent("143644254@N08","72157667662302764");
       loadBenefits();
+      loadSpecialAnnouncements(48930922921);
     });
   </script>
 </head>
 <body>
   <div class="row">
     <div class="col-xs-3">
-                <a width="100%" height="100%" class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar transparent" data-dnt="true" href="https://twitter.com/1MMPGH" data-widget-id="572145965768142848">Tweets by @1MMPGH</a>
+                <a width="100%" height="100%" class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter noborders noscrollbar transparent" data-dnt="true" href="https://twitter.com/1MMPGH" data-widget-id="572145965768142848">Tweets by @1MMPGH</a>
                             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-5">
       <div class="row"><h1>Welcome to al Masjid al Awwal</h1></div>
       <div class="row">
         <div class="col-xs-12" id="announcements"></div>
@@ -66,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-3" id="benefits"></div>
+    <div class="col-xs-4" id="specialAnnouncement"></div>
   </div>
 </body>
 </html>

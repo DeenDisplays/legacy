@@ -46,6 +46,7 @@ function loadBenefits() {
 }
 
 function jsonFlickrApi(data) {
+  if (data.photoset) {
     var photos = data.photoset.photo;
     
     for(var i = photos.length - 1; i >= 0; i--) {
@@ -55,6 +56,12 @@ function jsonFlickrApi(data) {
       }
     }
     $('#announcements div').next().fadeOut();
+  } else if(data.photo) {
+    var converter = new showdown.Converter(),
+    text      = data.photo.description._content,
+    convertedHtml      = converter.makeHtml(text);
+    $('#specialAnnouncement').html(convertedHtml);
+  }
 
 }
 
@@ -63,4 +70,11 @@ function getLink(photo) {
   return "https://live" +
          ".staticflickr.com/" + photo.server + 
          "/" + photo.id + "_" + photo.secret + "_b_d.jpg";
+}
+
+function loadSpecialAnnouncements(photoId) {
+  var link = 'https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=5c053e417b99b7fe023ee6554a95c25b&photo_id='+photoId+'&format=json';
+  console.log(link);
+  jQuery.get(link, "jsonp");
+
 }
