@@ -60,7 +60,14 @@ function jsonFlickrApi(data) {
     var converter = new showdown.Converter(),
     text      = data.photo.description._content,
     convertedHtml      = converter.makeHtml(text);
-    $('#specialAnnouncement').html(convertedHtml);
+    if(text) {
+      $('#specialAnnouncement').html(convertedHtml);
+    } else {
+      loadBenefits();
+    }
+  } else {
+    //TODO: Better fallback
+    loadBenefits();
   }
 
 }
