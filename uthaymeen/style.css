@@ -1,0 +1,17 @@
+#myVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Medula One', cursive;
+  font-size: 1.2em;
+  background: -webkit-linear-gradient(top, #FFF 10%, #CCC 80%,#888 100%)
+}
+
+#announcements {
+  height: 67%;
+}
