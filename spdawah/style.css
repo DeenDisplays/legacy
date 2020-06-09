@@ -13,14 +13,29 @@ body {
   width: 100%;
 }
 
-.prayerTimes {
-  padding-top: 40px;
-}
-
 #myVideo {
   position: fixed;
   top: 0;
   left: 0;
   min-width: 100%;
   min-height: 100%;
+}
+
+.slide {
+  margin-left: -20px;
+}
+
+.prayerTimes {
+  margin-top: 40px;
+
+}
+
+.prayerTimes {
+   background-image: radial-gradient(rgba(0, 0, 0), rgba(0, 0, 0, 0.7), rgba(255, 0, 0, 0) );
+   padding: 15px;
+   color: #fe1;
+}
+
+.prayerTimes .row div {
+  padding: 0px 5px 0px 5px;
 }
