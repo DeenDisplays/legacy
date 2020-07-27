@@ -18,6 +18,8 @@
     $(document).ready(function() {
       setTimes([39.93, -75.18], -5, [0,0,0,0,0]);
       loadContent("161188523@N06","72157702131410605");
+      loadTweets("spdawahcenter");
+      setInterval(function () { Divs($('#tweets div')) }, 8500);
     });
   </script>
 </head>
@@ -64,6 +66,12 @@
               <span class="title" id="jummahTime">1:00 PM</span>
             </strong>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="row">
+        <div id="tweets">
         </div>
       </div>
     </div>

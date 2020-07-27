@@ -103,3 +103,20 @@ h2 {
   display:block;
 }
 
+#tweets
+{
+  text-align: center;
+  position: relative;
+  display: block;
+  padding: 10px;
+}
+
+#tweets div {
+  position:absolute;
+  width: 100%;
+}
+
+#tweets > div:first-child
+{
+  display:block;
+}

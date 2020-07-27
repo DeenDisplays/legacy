@@ -17,39 +17,40 @@
     $(document).ready(function() {
       setTimes([40.73, -74.18], -5, [20,20,20,15,15]);
       loadContent("144360725@N07","72157669935379135");
+      loadTweets("masjidrahmah");
+      setInterval(function () { Divs($('#tweets div')) }, 8500);
     });
   </script>
 </head>
 <body>
-      <div class="row">
-        <div class="col-xs-12" id="announcements"></div>
-      </div>
       <div class="prayerTimes">
         <div class="row">
-        <div><strong>Today's Prayer Time</strong>s</div>
+          <div class="prayerTimesTitle">
+            <strong>Today's Prayer Times</strong>
+          </div>
         </div>
         <div class="row">
-          <div class="col-xs-4" id="fajr">
+          <div class="col-xs-6" id="fajr">
             <span class="title">Fajr</span>
             <span class="title" id="fajrTime"></span>
           </div>
-          <div class="col-xs-4" id="dhuhr">
+          <div class="col-xs-6" id="dhuhr">
             <span class="title">Dhuhr</span>
             <span class="title" id="dhuhrTime"></span>
           </div>
-          <div class="col-xs-4" id="asr">
+          <div class="col-xs-6" id="asr">
             <span class="title">'Asr</span>
             <span class="title" id="asrTime"></span>
           </div>
-          <div class="col-xs-4" id="maghrib">
+          <div class="col-xs-6" id="maghrib">
             <span class="title">Maghrib</span>
             <span class="title" id="maghribTime"></span>
           </div>
-          <div class="col-xs-4" id="isha">
+          <div class="col-xs-6" id="isha">
             <span class="title">'Isha</span>
             <span class="title" id="ishaTime">7:00 PM</span>
           </div>
-          <div class="col-xs-4" id="jumah">
+          <div class="col-xs-6" id="jumah">
             <strong>
               <span class="title">Jum'ah</span>
               <span class="title" id="jummahTime">1:00 PM</span>
@@ -57,37 +58,10 @@
           </div>
         </div>
       </div>
-      <div class="classTimes">
-          <div class="row">
-            <strong>Class Schedule at the Masjid</strong>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Wednesdays after Maghrib</div>
-            <div class="col-xs-6">Mulakhas al Fiqhi</div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Fridays after Maghrib</div>
-            <div class="col-xs-6">Kitaab at Tawheed</div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Sundays at 10:30 AM</div>
-            <div class="col-xs-6">Girls' Qur'an Class</div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Sundays at 12:00 PM</div>
-            <div class="col-xs-6">Boys' Qur'an Class</div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Sundays 11:45 AM</div>
-            <div class="col-xs-6">Sisters' Class</div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">Sundays After Duhr</div>
-            <div class="col-xs-6">Short Reminders from Imam</div>
-          </div>
-          <div class="row">
-            Sunday Arabic Classes for all levels, visit MasjidRahmah.org/classes for details
-          </div>
+      <div class="row">
+        <div class="col-xs-12" id="announcements"></div>
       </div>
+      <div class="row" id="tweetsTitle">Masjid updates from Twitter</div>
+      <div class="row" id="tweets"></div>
 </body>
 </html>

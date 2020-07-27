@@ -23,7 +23,7 @@ function loadContent(user, album) {
 
 function loadBenefits() {
   var parentDiv = document.getElementById("benefits");
-  benefits = $.get("../common/benefits.json?2").success( function(data) { 
+  benefits = $.get("../common/benefits.json?2").success( function(data) {
     data.list.forEach(function(benefit) {
       var div = document.createElement('div');
       var content =  document.createElement('p');
@@ -40,19 +40,44 @@ function loadBenefits() {
       parentDiv.insertBefore(div, parentDiv[randomIndex]);
     });
     $("#benefits div").next().fadeOut();
-    
+
   });
+
+}
+
+function loadTweets(username) {
+    var parentDiv = document.getElementById("tweets");
+    var source = "http://deendisplaytweets.s3-website-us-east-1.amazonaws.com/" + username + ".json";
+    benefits = $.get(source).success( function(data) {
+      data.forEach(function(tweet) {
+        if (tweet.retweeted_status) {
+          tweet = tweet.retweeted_status;
+        }
+        var div = document.createElement('div');
+        var content =  document.createElement('p');
+        var date =  document.createElement('p');
+        content.className = 'tweet-content';
+        content.textContent = tweet.full_text;
+        date.className = 'tweet-date';
+        date.textContent = tweet.created_at;
+        div.appendChild(content);
+        div.appendChild(date);
+        parentDiv.insertBefore(div, parentDiv[0]);
+      });
+      $("#tweets div").next().fadeOut();
+
+    });
 
 }
 
 function jsonFlickrApi(data) {
   if (data.photoset) {
     var photos = data.photoset.photo;
-    
+
     for(var i = photos.length - 1; i >= 0; i--) {
       $("#announcements").append("<div class=\"slide\"><img src=\""+ getLink(photos[i]) + "\"/></div>");
       if(photos[i].title != "") {
-        $("#classes").append("<div><h2>"+photos[i].title+"</h2></div>"); 
+        $("#classes").append("<div><h2>"+photos[i].title+"</h2></div>");
       }
     }
     $('#announcements div').next().fadeOut();
@@ -75,7 +100,7 @@ function jsonFlickrApi(data) {
 function getLink(photo) {
   console.log(photo);
   return "https://live" +
-         ".staticflickr.com/" + photo.server + 
+         ".staticflickr.com/" + photo.server +
          "/" + photo.id + "_" + photo.secret + "_b_d.jpg";
 }
 
