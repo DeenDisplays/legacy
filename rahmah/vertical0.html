@@ -17,21 +17,12 @@
     $(document).ready(function() {
       setTimes([40.73, -74.18], -5, [20,20,20,15,15]);
       loadContent("144360725@N07","72157669935379135");
+      loadTweets("masjidrahmah");
+      setInterval(function () { Divs($('#tweets div')) }, 8500);
     });
   </script>
 </head>
 <body>
-  <div class="row">
-    <div class="col-xs-12" id="announcements"></div>
-  </div>
-  <div class="row">
-    <div class="col-xs-4" height="100%">
-      <a width="100%" height="100%" class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar" data-theme="dark" data-dnt="true" href="https://twitter.com/masjidrahmah" data-widget-id="572145965768142848">Tweets by @MasjidRahmah</a>
-      <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-      </script>
-    </div>
-    <div class="col-xs-8">
       <div class="prayerTimes">
         <div class="row">
           <div class="prayerTimesTitle">
@@ -66,19 +57,11 @@
             </strong>
           </div>
         </div>
-        <br />
-        <div class="row">
-          <div class="prayerTimesTitle">
-            <strong>COVID-19 Guidelines for the Masjid</strong>
-          </div>
-          <ul>
-            <li>Wear a mask</li>
-            <li>Bring your own Prayer rug</li>
-            <li>Do not congregate inside or outside the masjid</li>
-          </ul>
-        </div>
       </div>
-    </div>
-  </div>
+      <div class="row">
+        <div class="col-xs-12" id="announcements"></div>
+      </div>
+      <div class="row" id="tweetsTitle">Masjid updates from Twitter</div>
+      <div class="row" id="tweets"></div>
 </body>
 </html>
