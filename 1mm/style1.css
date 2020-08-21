@@ -1,0 +1,43 @@
+body {
+  background-color: white;
+  background: -webkit-linear-gradient(bottom, #000 10%, #060 80%,#070 100%);
+  color: #FFF;
+  text-align:center;
+  font-size: 10px;
+  font-family: 'Redressed', cursive;
+  height: 100%;
+}
+
+h1 {
+  font-size: 3.5em;
+}
+
+h3 {
+  font-size: 1.7em;
+}
+
+.prayerTimes {
+  font-size: 1.5em;
+}
+
+#specialAnnouncement {
+  margin-top: 0px;
+}
+
+#specialAnnouncement h2{
+  font-size: 3em;
+}
+
+#specialAnnouncement p{
+  font-size: 1.5em;
+}
+
+#specialAnnouncement h1, h2, h3, p{
+  margin-top: 0px;
+  margin-bottom: 7px;
+}
+
+.prayerTimes .col-xs-4 {
+  padding: 0px 5px;
+  font-size: 1.2em;
+}
