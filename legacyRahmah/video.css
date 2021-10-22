@@ -1,0 +1,21 @@
+#myVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 1em;
+  background: -webkit-linear-gradient(top, #FFF 10%, #CCC 80%,#888 100%)
+}
+
+#announcements {
+  height: 63%;
+}
+
+.prayerTimes {
+  font-size: 2.5em;
+}
