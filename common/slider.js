@@ -84,7 +84,7 @@ function jsonFlickrApi(data) {
   } else if(data.photo) {
     var converter = new showdown.Converter(),
     text      = data.photo.description._content,
-    convertedHtml      = converter.makeHtml(text);
+    convertedHtml      = converter.makeHtml(text).replace('img src="','img src="https://');
     if(text) {
       $('#specialAnnouncement').html(convertedHtml);
     } else {

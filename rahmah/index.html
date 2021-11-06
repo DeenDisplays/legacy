@@ -18,39 +18,65 @@
     $(document).ready(function() {
       setTimes([40.73, -74.18], -5, [25,20,20,15,15]);
       loadContent("144360725@N07","72157669935379135");
-      setInterval(function () { loadSpecialAnnouncements(51618756800) }, 300);
+      loadSpecialAnnouncements(51618756800);
+      setInterval(function () { loadSpecialAnnouncements(51618756800) }, 300000);
     });
   </script>
 </head>
 <body>
+  <video autoplay muted loop id="myVideo">
+    <source src="../common/purpleGeometry.mp4" type="video/mp4">
+  </video>
+
   <div class="row">
-    <div class="col-xs-5">
-      <div class="row">
-        <h1>Today's Schedule</h1>
-        <h2>in shaa Allah</h2>
-      </div>
-      <div class="row">
-        <div class="col-xs-12" id="specialAnnouncement"></div>
-      </div>
+    <div class="col-xs-3">
+      <a width="100%" height="100%" class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar transparent" data-theme="dark" href="https://twitter.com/masjidrahmah?ref_src=twsrc%5Etfw">Tweets by masjidrahmah</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6">
       <div class="row">
-        <h3>Upcoming and ongoing programs at the Masjid</h3>
         <div class="col-xs-12" id="announcements"></div>
       </div>
       <br/><br/>
-      <div class="row">
-        <div class="col-xs-6">
-          <h3>Scan the QR Code to listen to the conference live on Spreaker -></h3>
+      <div class="prayerTimes">
+        <div class="row">
+          <strong>Iqamah Times</strong>
         </div>
-        <div class="col-xs-6">
-          <img max-height="100%" width="90%" src="https://live.staticflickr.com/65535/51618292261_7b46a6e92d_d.jpg"/>
+        <div class="row">
+          <div class="col-xs-4" id="fajr">
+            <span class="title">Fajr</span>
+            <span class="title" id="fajrTime"></span>
+          </div>
+          <div class="col-xs-4" id="dhuhr">
+            <span class="title">Dhuhr</span>
+            <span class="title" id="dhuhrTime"></span>
+          </div>
+          <div class="col-xs-4" id="asr">
+            <span class="title">'Asr</span>
+            <span class="title" id="asrTime"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4" id="maghrib">
+            <span class="title">Maghrib</span>
+            <span class="title" id="maghribTime"></span>
+          </div>
+          <div class="col-xs-4" id="isha">
+            <span class="title">'Isha</span>
+            <span class="title" id="ishaTime">7:00 PM</span>
+          </div>
+          <div class="col-xs-4" id="jumah">
+            <strong>
+              <span class="title">Jum'ah</span>
+              <span class="title" id="jummahTime">1:00 PM</span>
+            </strong>
+          </div>
         </div>
       </div>
-
     </div>
     <div class="col-xs-3">
-      <a width="100%" height="100%" class="twitter-timeline" data-chrome="noheader nofooter noborders noscrollbar transparent" data-theme="dark" href="https://twitter.com/masjidrahmah?ref_src=twsrc%5Etfw">Tweets by masjidrahmah</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      <div class="row">
+        <div class="col-xs-12" id="specialAnnouncement"></div>
+      </div>
     </div>
   </div>
 </body>
