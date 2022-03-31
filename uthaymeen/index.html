@@ -5,11 +5,13 @@
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <meta name="viewport" content=" user-scalable=no">
 
-  <link href="https://fonts.googleapis.com/css?family=Medula+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="../common/style.css">
+  <link rel="stylesheet" href="../common/clean.css">
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
   <script src="../common/slider.js"></script>
   <script src="../common/PrayTimes.js"></script>
   <script src="../common/time.js"></script>
@@ -17,7 +19,8 @@
     $(document).ready(function() {
       setTimes([40.23, -74.76], -5, [30,30,30,10,30]);
       loadContent("195205470@N03","72177720297510572");
-      loadBenefits();
+      loadSpecialAnnouncements(51376984303);
+      setInterval(function () { loadSpecialAnnouncements(51376984303) }, 300000);
     });
   </script>
 </head>
@@ -70,7 +73,11 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-3" id="benefits"></div>
+    <div class="col-xs-3">
+      <div class="row">
+        <div class="col-xs-12" id="specialAnnouncement"></div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
