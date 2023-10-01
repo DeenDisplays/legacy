@@ -24,9 +24,7 @@
       //loadSpecialAnnouncements(51618756800);
       //setInterval(function () { loadSpecialAnnouncements(51618756800) }, 300000);
 
-      const location = window.location;
-
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = new URLSearchParams(window.location.search);
       var i = searchParams.entries();
       var n = i.next();
       while (!n.done) {
@@ -36,18 +34,27 @@
 
 
       const iqamahOffset = searchParams.get("iqamahOffset");
-      setTimes([40.73, -74.18], -5, iqamahOffset.split(","));
+
+      const location = searchParams.get("location");
+
+      const timezone = searchParams.get("timezone");
 
       const user = searchParams.get("user");
 
       const album = searchParams.get("album");
-      loadContent(user, album);
+
+      const announcements = searchParams.get("announcements");
 
       var modal = document.getElementById("myModal");
       var missingParams = Array.from(document.getElementsByTagName("input")).map(x => x.value).includes("");
-      
+
       if (missingParams) {
         modal.style.display = missingParams ? "block" : "none";
+      } else {
+        setTimes(location.split(","), timezone, iqamahOffset.split(","));
+        loadContent(user, album);
+        loadSpecialAnnouncements(announcements);
+        setInterval(function () { loadSpecialAnnouncements(announcements) }, 300000);
       }
 
 
@@ -67,10 +74,16 @@
       <span class="close">&times;</span>
       <p>Display Configuration</p>
       <form id="submit" action="#" method="get">
+        <label for="location">Location</label>
+        <input id="location" type="text" name="location">
+        <label for="timezone">Timezone</label>
+        <input id="timezone" type="text" name="timezone">
         <label for="iqamahOffset">Iqamah Offset</label>
         <input id="iqamahOffset" type="text" name="iqamahOffset">
         <label for="user">Flickr User ID</label>
         <input id="user" type="text" name="user">
+        <label for="announcements">Flickr Picture with Announcements</label>
+        <input id="announcements" type="text" name="announcements">
         <label for="album">Flickr Album</label>
         <input id="album" type="text" name="album">
         <input type="submit" value="Submit">
