@@ -1,0 +1,67 @@
+<!DOCTYPE html/>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+  <script src="../common/slider.js"></script>
+  <script src="../common/PrayTimes.js"></script>
+  <script src="../common/prayerCalendar.js"></script>
+  <style>
+    table {
+        border-width: 1px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    tr {
+        margin: 20px;
+        font-size: 12px;
+    }
+    th {
+        min-width: 80px;
+    }
+    #iqamahTimes th {
+        min-width: 120px;
+    }
+  </style>
+  <script>
+$(document).ready(function() {
+    fillCalendar();
+});
+  </script>
+</head>
+<body>
+    <div style="text-align: center;">
+    <h1>Ramadan 1445 AH</h1>
+    <h2>Athaan Times at Masjid Rahmah</h2>
+    <table id="calendar">
+        <tr>
+            <th>Day</th>
+            <th>Gregorian Date</th>
+            <th>Fajr</th>
+            <th>Duhr</th>
+            <th>Asr</th>
+            <th>Maghrib</th>
+            <th>Isha</th>
+        </tr>
+    </table>
+    <h3>Iqamah Times</h3>
+    <p>How long after the athaan each prayer will be established</p>
+    <table id="iqamahTimes">
+        <tr>
+            <th>Fajr</th>
+            <th>Duhr</th>
+            <th>Asr</th>
+            <th>Maghrib</th>
+            <th>Isha</th>
+        </tr>
+        <tr>
+            <td>25 Minutes</td>
+            <td>20 Minutes</td>
+            <td>20 Minutes</td>
+            <td>10 Minutes</td>
+            <td>10 Minutes</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
