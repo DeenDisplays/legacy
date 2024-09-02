@@ -2,25 +2,65 @@
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
-  <script src="../common/slider.js"></script>
   <script src="../common/PrayTimes.js"></script>
   <script src="../common/prayerCalendar.js"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Baskervville+SC&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+    body {
+        font-family: "Cormorant Infant", serif;
+    }
+    .title {
+        text-align: left;
+        width: 600px;
+        margin: 0 auto;
+        font-family: "Cormorant Infant", serif;
+        font-weight: 700;
+        font-style: normal;
+    }
+    .title h1,h2 {
+        margin: 0px;
+    }
+    .title h2 {
+        font-size: 1.2em;
+    }
+    .logo {
+        width: 45%;
+        text-align: right;
+    }
+    .logo img {
+        width: 60%;
+    }
     table {
         border-width: 1px;
         text-align: center;
         margin: 0 auto;
+        font-size: .5em;
+    }
+    p {
+        font-size: 12px;
     }
     tr {
         margin: 20px;
-        font-size: 12px;
+        font-weight: 500;
     }
     th {
-        min-width: 80px;
+        min-width: 45px;
     }
-    #iqamahTimes th {
-        min-width: 120px;
+    table tr,th {
+        font-family: "Barlow Semi Condensed", sans-serif;
+        font-weight: 200;
+        font-style: normal;
+    }
+    #calendar .date-30 {
+        background-color: lightgray;
+        font-style: italic;
+    }
+    #calendar .day-5 {
+        font-weight: 500;
+    }
+    .num-days-disclaimer {
+        font-style: italic;
     }
   </style>
   <script>
@@ -30,38 +70,39 @@ $(document).ready(function() {
   </script>
 </head>
 <body>
-    <div style="text-align: center;">
-    <h1>Ramadan 1445 AH</h1>
-    <h2>Athaan Times at Masjid Rahmah</h2>
-    <table id="calendar">
-        <tr>
-            <th>Day</th>
-            <th>Gregorian Date</th>
-            <th>Fajr</th>
-            <th>Duhr</th>
-            <th>Asr</th>
-            <th>Maghrib</th>
-            <th>Isha</th>
-        </tr>
-    </table>
-    <h3>Iqamah Times</h3>
-    <p>How long after the athaan each prayer will be established</p>
-    <table id="iqamahTimes">
-        <tr>
-            <th>Fajr</th>
-            <th>Duhr</th>
-            <th>Asr</th>
-            <th>Maghrib</th>
-            <th>Isha</th>
-        </tr>
-        <tr>
-            <td>25 Minutes</td>
-            <td>20 Minutes</td>
-            <td>20 Minutes</td>
-            <td>10 Minutes</td>
-            <td>10 Minutes</td>
-        </tr>
-    </table>
-</div>
+    <div style="text-align: center">
+        <p>www.MasjidRahmah.org</p>
+        <div style="width: 600px; margin: 0 auto; display: flex">
+            <div class="title">
+                <h1>Rabi al Awwal 1446 AH</h1>
+                <h2>September 2024 CE | October 2024 CE</h2>
+            </div>
+            <div class="logo">
+                <img src="https://www.masjidrahmah.org/wp-content/uploads/2023/09/IMG_20230916_121356.png"/>
+                <p>487 Washington St., Newark, NJ 07083</p>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <table id="calendar">
+                <caption>Athaan times at the masjid</caption>
+                <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Gregorian Date</th>
+                    <th>Fajr Athaan</th>
+                    <th>Fajr Iqaamah</th>
+                    <th>Dhuhr Athaan</th>
+                    <th>Dhuhr Iqhaamah</th>
+                    <th>Asr Athaan</th>
+                    <th>Asr Iqaamah</th>
+                    <th>Maghrib Athaan</th>
+                    <th>Maghrib Iqaamaah</th>
+                    <th>Isha Athaan</th>
+                    <th>Isha Iqaamah</th>
+                </tr>
+            </table>
+            <p class="num-days-disclaimer">*This calendar assumes the hijri month to be 30 days in length, but the actual length will be determined based on the moon sighting.</p>
+        </div>
+    </div>
 </body>
 </html>

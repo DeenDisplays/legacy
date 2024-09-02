@@ -11,14 +11,17 @@ function fillCalendar() {
     for (let i = 1; i <= 30; i++) {
         // Create a new table row
         row = document.createElement('tr');
+        row.setAttribute("class", "date-" + i + " " + "day-" + date.getDay());
         times = PT.getTimes(date, [40.73, -74.18], -5, 'auto', '12h');
 
-        addCell(row, i)
+        addCell(row, i);
+
+        addCell(row, date.toLocaleDateString('en-US', { weekday: 'short' }));
 
         addCell(row, date.toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
-            }))
+            }));
 
 
         for (let k = 0; k < 5; k++) {
