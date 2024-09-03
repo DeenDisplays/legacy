@@ -1,6 +1,9 @@
 <!DOCTYPE html/>
 <html>
 <head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <script src="../common/PrayTimes.js"></script>
   <script src="../common/prayerCalendar.js"></script>
@@ -12,48 +15,66 @@
     }
     .title {
         text-align: left;
-        width: 600px;
-        margin: 0 auto;
+        width: 75%;
         font-family: "Cormorant Infant", serif;
         font-weight: 700;
         font-style: normal;
+        float: left;
     }
     .title h1,h2 {
         margin: 0px;
     }
+    .title h1 {
+        font-size: 2.3em;
+    }
     .title h2 {
-        font-size: 1.2em;
+        font-size: 1.5em;
+    }
+    .fa {
+            font-size: 18px;
+            text-decoration: none;
+            margin: 0px 5px 0px 0px;
+    }
+    p {
+        font-size: 16px;
+        margin: 5px 0px;
     }
     .logo {
-        width: 45%;
-        text-align: right;
+        width: 25%;
+        float: right;
     }
     .logo img {
-        width: 60%;
+        width: 100%;
     }
     table {
         border-width: 1px;
         text-align: center;
         margin: 0 auto;
-        font-size: .5em;
-    }
-    p {
-        font-size: 12px;
-    }
-    tr {
-        margin: 20px;
-        font-weight: 500;
-    }
-    th {
-        min-width: 45px;
-    }
-    table tr,th {
+        font-size: .8em;
         font-family: "Barlow Semi Condensed", sans-serif;
         font-weight: 200;
         font-style: normal;
+        width: 770px;
     }
-    #calendar .date-30 {
-        background-color: lightgray;
+    caption {
+        padding: 10px;
+        font-family: "Cormorant Infant", serif;
+        font-size: 1.5em;
+    }
+    th {
+        margin: 20px;
+        font-weight: 500;
+        min-width: 40px;
+        max-width: 45px;
+        background-color: black;
+        color: white;
+    }
+
+    #calendar .iqaamah {
+        background-color: rgb(245,245,245);
+    }
+    #calendar .date-30 td {
+        background-color: rgb(230,230,230);
         font-style: italic;
     }
     #calendar .day-5 {
@@ -65,32 +86,35 @@
   </style>
   <script>
 $(document).ready(function() {
-    fillCalendar();
+    fillCalendar(new Date((new Date()).getTime() + 24 * 60 * 60 * 1000), "Rabi' al Awwal 1446 AH");
 });
   </script>
 </head>
 <body>
-    <div style="text-align: center">
-        <p>www.MasjidRahmah.org</p>
-        <div style="width: 600px; margin: 0 auto; display: flex">
+    <div style="text-align: center; width: 770px; margin: 0 auto">
+        <div style="width: 100%; margin: 0 auto; display: flex">
             <div class="title">
-                <h1>Rabi al Awwal 1446 AH</h1>
-                <h2>September 2024 CE | October 2024 CE</h2>
+                <h1><span id="hijriMonth"></span></h1>
+                <h2><span id="gregorianMonths"></span></h2>
+                <p> <a class="fa fa-map-marker"></a>487 Washington St., Newark, NJ 07083</p>
+                <p> <a class="fa fa-globe"></a>www.MasjidRahmah.org</p>
+                <p> <a class="fa fa-twitter-square"></a>@MasjidRahmah</p>
+
             </div>
             <div class="logo">
                 <img src="https://www.masjidrahmah.org/wp-content/uploads/2023/09/IMG_20230916_121356.png"/>
-                <p>487 Washington St., Newark, NJ 07083</p>
             </div>
         </div>
         <div style="text-align: center;">
             <table id="calendar">
-                <caption>Athaan times at the masjid</caption>
+                <caption>Athaan and Iqaamah Times at the Masjid</caption>
                 <tr>
                     <th>Date</th>
                     <th>Day</th>
                     <th>Gregorian Date</th>
                     <th>Fajr Athaan</th>
                     <th>Fajr Iqaamah</th>
+                    <th>Sunrise</th>
                     <th>Dhuhr Athaan</th>
                     <th>Dhuhr Iqhaamah</th>
                     <th>Asr Athaan</th>
