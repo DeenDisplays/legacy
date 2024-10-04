@@ -86,12 +86,13 @@
   </style>
   <script>
 $(document).ready(function() {
-    fillCalendar(new Date((new Date()).getTime() + 24 * 60 * 60 * 1000), "Rabi' al Awwal 1446 AH");
+    fillCalendar(new Date(), "Rabi' al Awwal 1446 AH");
 });
   </script>
 </head>
 <body>
     <div style="text-align: center; width: 770px; margin: 0 auto">
+        <div style="height:50px"></div>
         <div style="width: 100%; margin: 0 auto; display: flex">
             <div class="title">
                 <h1><span id="hijriMonth"></span></h1>
