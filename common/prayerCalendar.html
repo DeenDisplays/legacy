@@ -86,7 +86,10 @@
   </style>
   <script>
 $(document).ready(function() {
-    fillCalendar(new Date(), "Rabi' al Awwal 1446 AH");
+    const params = new URLSearchParams(window.location.search);
+    const dateParts = params.get('date') ? params.get('date').split('-') : [new Date().getDate(), new Date().getMonth() + 1, new Date().getFullYear()];
+    const monthName = params.get('month') ? decodeURIComponent(params.get('month')) : "";
+    fillCalendar(new Date(dateParts[2], dateParts[0]-1, dateParts[1]), monthName);
 });
   </script>
 </head>
@@ -110,7 +113,7 @@ $(document).ready(function() {
             <table id="calendar">
                 <caption>Athaan and Iqaamah Times at the Masjid</caption>
                 <tr>
-                    <th>Date</th>
+                    <th>Hijri Date</th>
                     <th>Day</th>
                     <th>Gregorian Date</th>
                     <th>Fajr Athaan</th>
