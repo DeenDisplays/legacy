@@ -62,10 +62,20 @@ function refreshDaily() {
   }
 }
 
-function setTimes(coordinates, timezone, offsets, givenMethod) {
+function setTimes(coordinates, timezone, offset, givenMethod, ishaFixed) {
   var method = (typeof givenMethod == 'undefined') ? 'ISNA' : givenMethod;
   var PT = new PrayTimes(method);
   var date = new Date();
-  var times = PT.getTimes(date, coordinates, timezone);
-  displayTimes([times.fajr, times.dhuhr, times.asr, times.maghrib, times.isha], offsets);
+
+  var offsets = {"fajr":offset[0], "dhuhr":offset[1], "asr":offset[2], "maghrib":offset[3], "isha":offset[4]};
+  PT.tune(offsets);
+  var times = PT.getTimes(date, coordinates, timezone, 'auto', '12h');
+
+  var prayers = ["fajr", "dhuhr", "asr", "maghrib", "isha"];
+
+  if (ishaFixed && parseInt(times.isha.split(':')[0]) < 7)
+    times.isha = '7:00 PM';
+
+  prayers.map(p => $("#" + p + "Time").html(times[p].toUpperCase()));
+
 }

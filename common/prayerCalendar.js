@@ -3,6 +3,9 @@ function fillCalendar(date, hijriMonth) {
     if (date == undefined)
         date = new Date();
 
+    // to deal with daylight savings edge-case when incrementing days
+    date.setHours(2);
+
     setMonths(date, hijriMonth);
 
     var timeNames = ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"];
@@ -24,6 +27,9 @@ function fillCalendar(date, hijriMonth) {
         iqaamahTimes = iqaamahPT.getTimes(date, [40.73, -74.18], -5, 'auto', '12h');
         if (date.getDay() == 5)
             iqaamahTimes.dhuhr = '1:00 pm';
+
+        if (parseInt(iqaamahTimes.isha.split(':')[0]) < 7)
+            iqaamahTimes.isha = '7:00 pm';
 
         addCell(row, i);
 
