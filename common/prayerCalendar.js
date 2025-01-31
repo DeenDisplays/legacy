@@ -79,7 +79,7 @@ function setMonths(date, hijriMonth) {
         year : 'numeric'
         });
     
-    var gregorianMonths = thisMonthString == nextMonthString ? thisMonthString : thisMonthString + " | " + nextMonthString;
+    var gregorianMonths = thisMonthString == nextMonthString ? thisMonthString : thisMonthString + " - " + nextMonthString;
     document.getElementById("gregorianMonths").innerHTML = gregorianMonths;
 }
 
