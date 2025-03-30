@@ -9,7 +9,7 @@ function fillCalendar(date, hijriMonth) {
     setMonths(date, hijriMonth);
 
     var timeNames = ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"];
-    var offsets = {"fajr":25, "dhuhr":20, "asr":20, "maghrib":10, "isha":20};
+    var offsets = {"fajr":25, "dhuhr":20, "asr":20, "maghrib":10, "isha":10};
     const ishaFixedHour = 6;
     const ishaFixedMinute = 30;
 
