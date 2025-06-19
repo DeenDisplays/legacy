@@ -1,79 +1,501 @@
-<!DOCTYPE html/>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
- <meta http-equiv="refresh" content="3600" />
-<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-<meta name="viewport" content=" user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Prayer Times</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styling --- */
+        :root {
+            --bg-color: #14283c; /* Dark Slate Blue */
+            --primary-text-color: #e0dcd1; /* Warm Cream */
+            --accent-color: #e6b85c; /* Gold */
+            --card-bg-color: #1e3a56; /* Lighter Slate Blue */
+            --highlight-bg-color: #0d1a26; /* Very Dark Blue */
+            --highlight-accent-color: #ffc107; /* Brighter Gold */
+            --pattern-color: 'rgba(224, 220, 209, 0.05)'; /* Pattern color based on text color */
+        }
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="../common/style.css">
-  <link rel="stylesheet" href="../common/clean.css">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
-  <script src="../common/slider.js"></script>
-  <script src="../common/PrayTimes.js"></script>
-  <script src="../common/time.js"></script>
-  <script>
-    $(document).ready(function() {
-      setTimes([32.77, -96.77], -6, [25,20,20,10,20], "ISNA");
-      loadContent("195205470@N03","72177720297510572");
-      loadSpecialAnnouncements(51376984303);
-      setInterval(function () { loadSpecialAnnouncements(51376984303) }, 300000);
-    });
-  </script>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Amiri', serif;
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Main Container for fixed aspect ratio --- */
+        #display-wrapper {
+            width: 960px;
+            height: 540px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            transform-origin: center center;
+            background-color: var(--bg-color);
+            /* Subtle geometric pattern using URL-encoded SVG */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23e6b85c' fill-opacity='0.06'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 40h2l-2 2V40zm-2 2h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zM0 40h2l-2 2V40zm2-2h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2-38h2l-2 2V2zm0 2h2l-2 2V4zm0 2h2l-2 2V6zm0 2h2l-2 2V8zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zM40 0h2l-2 2V0zm2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 38h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zM2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 38h2l-2 2v-2zm0 2h2l-2 2v-2zm0-38h2l-2 2V2zm0 2h2l-2 2V4zm0 2h2l-2 2V6zm0 2h2l-2 2V8zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zM80 80h-2l2-2v2zm-2-2h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 38h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zM40 80h-2l2-2v2zm-2-2h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2-38h-2l2-2v2zm0 2h-2l2-2v2zm-38 38h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm38-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm-38-2h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zM80 0h-2l2 2V0zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 38h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zM40 40h2l-2-2v2zm2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-38h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zM2 40h2l-2-2v2zm2-2h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2-38h2l-2-2v2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zM42 80h-2l2-2v2zm-2-2h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2-38h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zM80 42v-2l-2 2h2zm-2-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm38 2v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-38-2v-2l-2 2h2zm2-2v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zM40 2v-2l-2 2h2zm-2-2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 38v-2l-2 2h2zm0-2v-2l-2 2h2zm-38-38v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm38 2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm-38-2v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zM80 78v2l2-2h-2zm-2 2v2l2-2h-2zM0 80v-2l2 2H0zm2-2v-2l2 2H2zm2 0v-2l2 2H4zm2 0v-2l2 2H6zm2 0v-2l2 2H8zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zM40 80v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zM80 0v2l2-2H80z' /%3E%3C/svg%3E");
+        }
+
+        /* --- Header: Dates --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 30px; /* Reduced padding */
+            background-color: rgba(0,0,0,0.2);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em; /* Adjusted font size */
+            font-weight: 400;
+            border-bottom: 1px solid var(--accent-color);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        #gregorian-date { text-align: left; }
+        #hijri-date { text-align: right; }
+
+        /* --- Main Content: Clock --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        #clock {
+            font-family: 'Cinzel', serif;
+            font-size: 6em; /* Adjusted font size */
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+        
+        #next-prayer-info {
+            font-size: 1.5em; /* Adjusted font size */
+            margin-top: 10px;
+            font-weight: 400;
+        }
+        
+        #next-prayer-info strong,
+        #next-prayer-info .time-remaining {
+            font-weight: 700;
+            color: var(--highlight-accent-color);
+        }
+
+        /* --- Footer: Prayer Times --- */
+        .footer {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            padding: 8px;
+            background-color: rgba(0,0,0,0.2);
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .prayer {
+            text-align: center;
+            padding: 8px 5px; /* Reduced padding */
+            transition: background-color 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .prayer.current {
+            background-color: var(--highlight-bg-color);
+            border: 1px solid var(--highlight-accent-color);
+            transform: scale(1.03);
+            box-shadow: 0 0 15px -2px var(--highlight-accent-color);
+        }
+
+        .prayer-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5em; /* Adjusted font size */
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .prayer-details {
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             margin-top: 2px;
+        }
+
+        .prayer-type {
+            font-size: 1em; /* Adjusted font size */
+            color: #aaa;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .prayer-time {
+            font-family: 'Amiri', serif;
+            font-size: 1.3em; /* Adjusted font size */
+            font-weight: 700;
+            color: var(--accent-color);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .jumah-note {
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 1.1em; /* Adjusted font size */
+            padding: 4px; /* Reduced padding */
+            background-color: var(--highlight-bg-color);
+            color: var(--highlight-accent-color);
+        }
+    </style>
 </head>
 <body>
 
-  <video autoplay muted loop id="myVideo">
-    <source src="../common/gold.mp4" type="video/mp4">
-  </video>
+<div id="display-wrapper">
+    <!-- Header for Gregorian and Hijri Dates -->
+    <div class="header">
+        <div id="gregorian-date">Loading...</div>
+        <div id="hijri-date">Loading...</div>
+    </div>
 
-  <div class="row">
-    <div class="col-xs-9">
-      <div class="row"><h1>Welcome to Masjid al Uthaymeen</h1></div>
-      <div class="row">
-        <div class="col-xs-12" id="announcements"></div>
-      </div>
-      <div class="prayerTimes">
-        <div class="row">
-          <div class="col-xs-4" id="fajr">
-            <span class="title">Fajr</span>
-            <span class="title" id="fajrTime"></span>
-          </div>
-          <div class="col-xs-4" id="dhuhr">
-            <span class="title">Dhuhr</span>
-            <span class="title" id="dhuhrTime"></span>
-          </div>
-          <div class="col-xs-4" id="asr">
-            <span class="title">'Asr</span>
-            <span class="title" id="asrTime"></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-4" id="maghrib">
-            <span class="title">Maghrib</span>
-            <span class="title" id="maghribTime"></span>
-          </div>
-          <div class="col-xs-4" id="isha">
-            <span class="title">'Isha</span>
-            <span class="title" id="ishaTime"></span>
-          </div>
-          <div class="col-xs-4" id="jumah">
-            <strong>
-              <span class="title">Jum'ah</span>
-              <span class="title" id="jummahTime">1:00 PM</span>
-            </strong>
-          </div>
-        </div>
-      </div>
+    <!-- Main Content for Clock and Next Prayer Info -->
+    <div class="main-content">
+        <div id="clock">--:--</div>
+        <div id="next-prayer-info">Calculating prayer times...</div>
     </div>
-    <div class="col-xs-3">
-      <div class="row">
-        <div class="col-xs-12" id="specialAnnouncement"></div>
-      </div>
+
+    <!-- Footer for Prayer Times -->
+    <div class="footer">
+        <div class="prayer" id="fajr-card">
+            <div class="prayer-name">Fajr</div>
+            <div class="prayer-details">
+                <div class="prayer-type">Athaan</div>
+                <div class="prayer-time" id="fajr">--:--</div>
+                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                <div class="prayer-time" id="fajr-iqamah">--:--</div>
+            </div>
+        </div>
+        <div class="prayer" id="dhuhr-card">
+            <div class="prayer-name" id="dhuhr-jumah-name">Dhuhr</div>
+            <!-- Dhuhr Details (default) -->
+            <div id="dhuhr-details" class="prayer-details">
+                <div class="prayer-type">Athaan</div>
+                <div class="prayer-time" id="dhuhr">--:--</div>
+                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                <div class="prayer-time" id="dhuhr-iqamah">--:--</div>
+            </div>
+            <!-- Jum'ah Details (hidden by default) -->
+            <div id="jumah-details" class="prayer-details" style="display: none;">
+                <div class="prayer-type">Begins at</div>
+                <div class="prayer-time" style="color: var(--accent-color);">1:45 PM</div>
+            </div>
+        </div>
+        <div class="prayer" id="asr-card">
+            <div class="prayer-name">Asr</div>
+            <div class="prayer-details">
+                <div class="prayer-type">Athaan</div>
+                <div class="prayer-time" id="asr">--:--</div>
+                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                <div class="prayer-time" id="asr-iqamah">--:--</div>
+            </div>
+        </div>
+        <div class="prayer" id="maghrib-card">
+            <div class="prayer-name">Maghrib</div>
+            <div class="prayer-details">
+                <div class="prayer-type">Athaan</div>
+                <div class="prayer-time" id="maghrib">--:--</div>
+                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                <div class="prayer-time" id="maghrib-iqamah">--:--</div>
+            </div>
+        </div>
+        <div class="prayer" id="isha-card">
+            <div class="prayer-name">Isha</div>
+            <div class="prayer-details">
+                <div class="prayer-type">Athaan</div>
+                <div class="prayer-time" id="isha">--:--</div>
+                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                <div class="prayer-time" id="isha-iqamah">--:--</div>
+            </div>
+        </div>
     </div>
-  </div>
+    <div id="jumah-note" class="jumah-note">
+        Salaatul Jum'ah begins at 1:45 PM
+    </div>
+</div>
+
+<script src="https://deendisplays.github.io/legacy/common/PrayTimes.js"></script>
+<script src="https://deendisplays.github.io/legacy/common/hijricalendar-kuwaiti.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Configuration ---
+        const PRAYER_CALCULATION_METHOD = 'ISNA'; // See PrayTimes.js for more methods
+        const IQAMAH_OFFSETS = { // Time in minutes after athaan
+            fajr: 15,
+            dhuhr: 10,
+            asr: 10,
+            maghrib: 5,
+            isha: 10
+        };
+        const HIJRI_DATE_ADJUSTMENT = 0; // Days to add/subtract from calculated Hijri date
+
+        const prayerTimesInstance = new PrayTimes(PRAYER_CALCULATION_METHOD);
+
+        // --- UI Elements ---
+        const clockEl = document.getElementById('clock');
+        const gregorianDateEl = document.getElementById('gregorian-date');
+        const hijriDateEl = document.getElementById('hijri-date');
+        const nextPrayerInfoEl = document.getElementById('next-prayer-info');
+        
+        const prayerTimeEls = {
+            fajr: document.getElementById('fajr'),
+            dhuhr: document.getElementById('dhuhr'),
+            asr: document.getElementById('asr'),
+            maghrib: document.getElementById('maghrib'),
+            isha: document.getElementById('isha'),
+        };
+        
+        const iqamahTimeEls = {
+            fajr: document.getElementById('fajr-iqamah'),
+            dhuhr: document.getElementById('dhuhr-iqamah'),
+            asr: document.getElementById('asr-iqamah'),
+            maghrib: document.getElementById('maghrib-iqamah'),
+            isha: document.getElementById('isha-iqamah'),
+        };
+
+        let prayerTimes = {};
+
+        // --- Core Functions ---
+
+        /**
+         * Get location and timezone from URL parameters or use defaults.
+         */
+        function getUrlParameters() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                latitude: parseFloat(params.get('latitude')) || 40.6782, // Union, NJ
+                longitude: parseFloat(params.get('longitude')) || -74.2632, // Union, NJ
+                timezone: parseFloat(params.get('timezone')) || -4 // EDT
+            };
+        }
+
+        /**
+         * Formats a 24-hour time string (HH:mm) to a 12-hour AM/PM format (h:mm AM/PM).
+         */
+        function formatTo12Hour(timeString) {
+            if (typeof timeString !== 'string' || !timeString.includes(':')) return '--:--';
+            const [hours24, minutes] = timeString.split(':');
+            const hoursNum = parseInt(hours24, 10);
+            const ampm = hoursNum >= 12 ? 'PM' : 'AM';
+            let hours12 = hoursNum % 12;
+            hours12 = hours12 ? hours12 : 12; // The hour '0' should be '12'
+            return `${hours12}:${minutes} ${ampm}`;
+        }
+
+        /**
+         * Calculate and display prayer times, with special handling for Friday.
+         */
+        function calculateAndDisplayPrayerTimes() {
+            const { latitude, longitude, timezone } = getUrlParameters();
+            const date = new Date();
+            const isFriday = date.getDay() === 5;
+
+            // Get calculated times from library
+            prayerTimes = prayerTimesInstance.getTimes(date, [latitude, longitude], timezone);
+
+            // --- Jum'ah Special Handling ---
+            const dhuhrJumahNameEl = document.getElementById('dhuhr-jumah-name');
+            const dhuhrDetailsEl = document.getElementById('dhuhr-details');
+            const jumahDetailsEl = document.getElementById('jumah-details');
+
+            if (isFriday) {
+                // Set fixed time for countdown logic
+                prayerTimes.dhuhr = '13:45'; 
+                
+                // Toggle UI elements for Jum'ah
+                dhuhrJumahNameEl.textContent = "Jum'ah";
+                dhuhrDetailsEl.style.display = 'none';
+                jumahDetailsEl.style.display = 'flex'; // Use flex for consistency with CSS
+            } else {
+                // Restore UI elements for Dhuhr on other days
+                dhuhrJumahNameEl.textContent = "Dhuhr";
+                dhuhrDetailsEl.style.display = 'flex'; // Use flex for consistency with CSS
+                jumahDetailsEl.style.display = 'none';
+            }
+
+            // --- Populate all prayer times ---
+            for (const prayer in prayerTimeEls) {
+                const time24 = prayerTimes[prayer];
+                
+                prayerTimeEls[prayer].textContent = formatTo12Hour(time24);
+                
+                // Calculate and populate Iqamah time
+                const [h, m] = time24.split(':').map(Number);
+                const athaanDate = new Date();
+                athaanDate.setHours(h, m, 0, 0);
+                athaanDate.setMinutes(athaanDate.getMinutes() + IQAMAH_OFFSETS[prayer]);
+                const iqamahH = athaanDate.getHours();
+                const iqamahM = athaanDate.getMinutes();
+                const iqamahTime24 = `${String(iqamahH).padStart(2, '0')}:${String(iqamahM).padStart(2, '0')}`;
+                iqamahTimeEls[prayer].textContent = formatTo12Hour(iqamahTime24);
+            }
+        }
+
+        /**
+         * Converts a Gregorian date to a formatted Hijri date string.
+         */
+        function getFormattedHijriDate(adjustment) {
+            try {
+                return getIslamicDate(adjustment);
+            } catch (e) {
+                console.error("Error converting to Hijri date:", e);
+                return "Error in Hijri conversion";
+            }
+        }
+
+        /**
+         * Update all UI elements that change over time.
+         */
+        function updateUI() {
+            const now = new Date();
+            
+            // Update Clock to 12-hour AM/PM format without seconds
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            clockEl.innerHTML = `${hours}:${minutes} <span style="font-size: 0.5em; vertical-align: text-top; font-weight: 400;">${ampm}</span>`;
+
+            // Update Gregorian Date
+            gregorianDateEl.textContent = now.toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            // Update Hijri Date
+            hijriDateEl.textContent = getFormattedHijriDate(HIJRI_DATE_ADJUSTMENT);
+            
+            // Update Next Prayer Info and Highlight
+            updateNextPrayer(now);
+        }
+        
+        /**
+         * Find the next prayer and update the countdown and highlight.
+         */
+        function updateNextPrayer(now) {
+            const nowInMinutes = now.getHours() * 60 + now.getMinutes();
+            let nextPrayerName = '';
+            let nextPrayerTimeInMinutes = 0;
+
+            const prayerOrder = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+
+            // Find the next prayer for today
+            for (const prayer of prayerOrder) {
+                if (!prayerTimes[prayer]) continue; 
+                const [h, m] = prayerTimes[prayer].split(':').map(Number);
+                const prayerTimeInMinutes = h * 60 + m;
+                if (prayerTimeInMinutes > nowInMinutes) {
+                    nextPrayerName = prayer;
+                    nextPrayerTimeInMinutes = prayerTimeInMinutes;
+                    break;
+                }
+            }
+
+            // If all prayers for today have passed, next prayer is Fajr of the next day
+            if (!nextPrayerName) {
+                const tomorrow = new Date(now);
+                tomorrow.setDate(now.getDate() + 1);
+                const { latitude, longitude, timezone } = getUrlParameters();
+                const tomorrowPrayerTimes = prayerTimesInstance.getTimes(tomorrow, [latitude, longitude], timezone);
+                
+                nextPrayerName = 'fajr';
+                const [h, m] = tomorrowPrayerTimes.fajr.split(':').map(Number);
+                nextPrayerTimeInMinutes = (h * 60 + m) + (24 * 60); 
+            }
+            
+            // Calculate time remaining
+            let diffMinutes = nextPrayerTimeInMinutes - nowInMinutes;
+            if(diffMinutes < 0) { diffMinutes += 24 * 60; }
+
+            const diffH = Math.floor(diffMinutes / 60);
+            const diffM = diffMinutes % 60;
+            
+            // Update UI text (use "Jum'ah" if Friday)
+            const isFriday = new Date().getDay() === 5;
+            let displayPrayerName = nextPrayerName.charAt(0).toUpperCase() + nextPrayerName.slice(1);
+            if(isFriday && nextPrayerName === 'dhuhr') {
+                displayPrayerName = "Jum'ah";
+            }
+            nextPrayerInfoEl.innerHTML = `Next prayer is <strong>${displayPrayerName}</strong> in <span class="time-remaining">${diffH}h ${diffM}m</span>`;
+            
+            // Update highlight on the NEXT prayer card
+            document.querySelectorAll('.prayer').forEach(el => el.classList.remove('current'));
+            const nextCard = document.getElementById(`${nextPrayerName}-card`);
+            if (nextCard) {
+                nextCard.classList.add('current');
+            }
+        }
+
+        /**
+         * Resizes the main wrapper to fit the window while maintaining aspect ratio.
+         */
+        function resizeDisplay() {
+            const wrapper = document.getElementById('display-wrapper');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const aspectRatio = 960 / 540;
+
+            let newWidth = windowWidth;
+            let newHeight = newWidth / aspectRatio;
+
+            if (newHeight > windowHeight) {
+                newHeight = windowHeight;
+                newWidth = newHeight * aspectRatio;
+            }
+            
+            const scale = newWidth / 960;
+            wrapper.style.transform = `scale(${scale})`;
+        }
+
+        // --- Initial Setup and Intervals ---
+        
+        // Initial calls
+        calculateAndDisplayPrayerTimes();
+        updateUI();
+        resizeDisplay();
+        
+        // Update the clock and next prayer info every second
+        setInterval(updateUI, 1000);
+        
+        // Recalculate all times at midnight.
+        setInterval(() => {
+            const now = new Date();
+            if (now.getHours() === 0 && now.getMinutes() === 0) {
+                 calculateAndDisplayPrayerTimes();
+            }
+        }, 60 * 1000);
+        
+        // Handle window resizing
+        window.addEventListener('resize', resizeDisplay);
+    });
+</script>
+
 </body>
 </html>
