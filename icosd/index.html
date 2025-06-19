@@ -248,11 +248,11 @@
         // --- Configuration ---
         const PRAYER_CALCULATION_METHOD = 'ISNA'; // See PrayTimes.js for more methods
         const IQAMAH_OFFSETS = { // Time in minutes after athaan
-            fajr: 15,
-            dhuhr: 10,
-            asr: 10,
-            maghrib: 5,
-            isha: 10
+            fajr: 25,
+            dhuhr: 25,
+            asr: 25,
+            maghrib: 10,
+            isha: 25
         };
         const HIJRI_DATE_ADJUSTMENT = 0; // Days to add/subtract from calculated Hijri date
 
@@ -290,9 +290,9 @@
         function getUrlParameters() {
             const params = new URLSearchParams(window.location.search);
             return {
-                latitude: parseFloat(params.get('latitude')) || 40.6782, // Union, NJ
-                longitude: parseFloat(params.get('longitude')) || -74.2632, // Union, NJ
-                timezone: parseFloat(params.get('timezone')) || -4 // EDT
+                latitude: parseFloat(params.get('latitude')) || 32.77,
+                longitude: parseFloat(params.get('longitude')) ||  -96.77, 
+                timezone: parseFloat(params.get('timezone')) || -6 // EDT
             };
         }
 
