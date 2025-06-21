@@ -339,6 +339,7 @@
 
         let prayerTimes = {};
         let allPrayerEvents = [];
+        let slideshowInterval; // To hold the slideshow interval ID
 
         // --- Core Functions ---
 
@@ -541,17 +542,22 @@
          * Initializes and runs the slideshow on the right column.
          */
         function initSlideshow() {
+            // Clear any existing slideshow interval to prevent multiple running timers
+            if (slideshowInterval) {
+                clearInterval(slideshowInterval);
+            }
+
             const slides = document.querySelectorAll('.slideshow-container .slide');
             if (slides.length <= 1) return; // Don't run slideshow if 1 or 0 slides
 
             let currentSlide = 0;
-            
+
             // Make the first slide visible immediately
             if (slides.length > 0) {
                 slides[currentSlide].classList.add('active');
             }
 
-            setInterval(() => {
+            slideshowInterval = setInterval(() => {
                 if (slides.length <= 1) return;
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
@@ -633,6 +639,16 @@
         
         // Handle window resizing
         window.addEventListener('resize', resizeDisplay);
+
+        // Refresh slideshow content from Flickr periodically
+        setInterval(() => {
+            loadFlickrSlideshow('144360725@N07', '72177720323417964');
+        }, 10 * 60 * 1000); // 10 minutes
+
+        // Full page refresh periodically to prevent any long-term issues
+        setInterval(() => {
+            location.reload();
+        }, 24 * 60 * 60 * 1000); // 24 hours
     });
 </script>
 
