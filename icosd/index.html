@@ -65,6 +65,27 @@
         #gregorian-date { text-align: left; }
         #hijri-date { text-align: right; }
 
+        /* --- Body Layout --- */
+        #content-body {
+            flex-grow: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        #left-column {
+            width: 66.666%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #right-column {
+            width: 33.333%;
+            height: 100%;
+            padding: 20px; /* This provides the margin around the slideshow container */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
         /* --- Main Content: Clock --- */
         .main-content {
             flex-grow: 1;
@@ -164,6 +185,33 @@
             background-color: var(--highlight-bg-color);
             color: var(--highlight-accent-color);
         }
+
+        /* --- Slideshow Styling --- */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* This clips the images if they exceed the container's bounds */
+        }
+
+        .slideshow-container .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slideshow-container .slide.active {
+            opacity: 1;
+        }
+        .slideshow-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures the entire image is visible, preserving aspect ratio */ 
+            border-radius: 10px; /* Add rounded corners for a softer look */
+        }
     </style>
 </head>
 <body>
@@ -175,68 +223,77 @@
         <div id="hijri-date">Loading...</div>
     </div>
 
-    <!-- Main Content for Clock and Next Prayer Info -->
-    <div class="main-content">
-        <div id="clock">--:--</div>
-        <div id="next-prayer-info">Calculating prayer times...</div>
-    </div>
+    <div id="content-body">
+        <div id="left-column">
+            <!-- Main Content for Clock and Next Prayer Info -->
+            <div class="main-content">
+                <div id="clock">--:--</div>
+                <div id="next-prayer-info">Calculating prayer times...</div>
+            </div>
 
-    <!-- Footer for Prayer Times -->
-    <div class="footer">
-        <div class="prayer" id="fajr-card">
-            <div class="prayer-name">Fajr</div>
-            <div class="prayer-details">
-                <div class="prayer-type">Athaan</div>
-                <div class="prayer-time" id="fajr">--:--</div>
-                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
-                <div class="prayer-time" id="fajr-iqamah">--:--</div>
+            <!-- Footer for Prayer Times -->
+            <div class="footer">
+                <div class="prayer" id="fajr-card">
+                    <div class="prayer-name">Fajr</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="fajr">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="fajr-iqamah">--:--</div>
+                    </div>
+                </div>
+                <div class="prayer" id="dhuhr-card">
+                    <div class="prayer-name" id="dhuhr-jumah-name">Dhuhr</div>
+                    <!-- Dhuhr Details (default) -->
+                    <div id="dhuhr-details" class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="dhuhr">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="dhuhr-iqamah">--:--</div>
+                    </div>
+                    <!-- Jum'ah Details (hidden by default) -->
+                    <div id="jumah-details" class="prayer-details" style="display: none;">
+                        <div class="prayer-type">Begins at</div>
+                        <div class="prayer-time" style="color: var(--accent-color);">1:45 PM</div>
+                    </div>
+                </div>
+                <div class="prayer" id="asr-card">
+                    <div class="prayer-name">Asr</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="asr">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="asr-iqamah">--:--</div>
+                    </div>
+                </div>
+                <div class="prayer" id="maghrib-card">
+                    <div class="prayer-name">Maghrib</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="maghrib">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="maghrib-iqamah">--:--</div>
+                    </div>
+                </div>
+                <div class="prayer" id="isha-card">
+                    <div class="prayer-name">Isha</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="isha">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="isha-iqamah">--:--</div>
+                    </div>
+                </div>
+            </div>
+            <div id="jumah-note" class="jumah-note">
+                Salaatul Jum'ah begins at 1:45 PM
             </div>
         </div>
-        <div class="prayer" id="dhuhr-card">
-            <div class="prayer-name" id="dhuhr-jumah-name">Dhuhr</div>
-            <!-- Dhuhr Details (default) -->
-            <div id="dhuhr-details" class="prayer-details">
-                <div class="prayer-type">Athaan</div>
-                <div class="prayer-time" id="dhuhr">--:--</div>
-                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
-                <div class="prayer-time" id="dhuhr-iqamah">--:--</div>
-            </div>
-            <!-- Jum'ah Details (hidden by default) -->
-            <div id="jumah-details" class="prayer-details" style="display: none;">
-                <div class="prayer-type">Begins at</div>
-                <div class="prayer-time" style="color: var(--accent-color);">1:45 PM</div>
+        <div id="right-column">
+            <div class="slideshow-container">
+                <!-- Slideshow images will be loaded here from Flickr -->
             </div>
         </div>
-        <div class="prayer" id="asr-card">
-            <div class="prayer-name">Asr</div>
-            <div class="prayer-details">
-                <div class="prayer-type">Athaan</div>
-                <div class="prayer-time" id="asr">--:--</div>
-                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
-                <div class="prayer-time" id="asr-iqamah">--:--</div>
-            </div>
-        </div>
-        <div class="prayer" id="maghrib-card">
-            <div class="prayer-name">Maghrib</div>
-            <div class="prayer-details">
-                <div class="prayer-type">Athaan</div>
-                <div class="prayer-time" id="maghrib">--:--</div>
-                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
-                <div class="prayer-time" id="maghrib-iqamah">--:--</div>
-            </div>
-        </div>
-        <div class="prayer" id="isha-card">
-            <div class="prayer-name">Isha</div>
-            <div class="prayer-details">
-                <div class="prayer-type">Athaan</div>
-                <div class="prayer-time" id="isha">--:--</div>
-                <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
-                <div class="prayer-time" id="isha-iqamah">--:--</div>
-            </div>
-        </div>
-    </div>
-    <div id="jumah-note" class="jumah-note">
-        Salaatul Jum'ah begins at 1:45 PM
     </div>
 </div>
 
@@ -480,11 +537,87 @@
             wrapper.style.transform = `scale(${scale})`;
         }
 
+        /**
+         * Initializes and runs the slideshow on the right column.
+         */
+        function initSlideshow() {
+            const slides = document.querySelectorAll('.slideshow-container .slide');
+            if (slides.length <= 1) return; // Don't run slideshow if 1 or 0 slides
+
+            let currentSlide = 0;
+            
+            // Make the first slide visible immediately
+            if (slides.length > 0) {
+                slides[currentSlide].classList.add('active');
+            }
+
+            setInterval(() => {
+                if (slides.length <= 1) return;
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 10000); // Change slide every 10 seconds
+        }
+
+        /**
+         * Loads photos from a Flickr album by creating a JSONP script tag.
+         * @param {string} userId - The Flickr user ID.
+         * @param {string} albumId - The Flickr album/photoset ID.
+         */
+        function loadFlickrSlideshow(userId, albumId) {
+            const apiKey = '5c053e417b99b7fe023ee6554a95c25b'; // Public API key from other project files
+            const script = document.createElement('script');
+            // Use jsoncallback parameter for JSONP. The callback function must be globally accessible.
+            script.src = `https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}&photoset_id=${albumId}&user_id=${userId}&format=json&jsoncallback=jsonFlickrApi`;
+            
+            script.onerror = () => {
+                console.error('Failed to load Flickr script.');
+                window.jsonFlickrApi({ stat: 'fail', message: 'Could not load Flickr script.' });
+                document.head.removeChild(script);
+            };
+            
+            document.head.appendChild(script);
+        }
+
+        /**
+         * Callback function for the Flickr JSONP API call.
+         * This is attached to the window object to be globally accessible.
+         * @param {object} data - The data object from Flickr.
+         */
+        window.jsonFlickrApi = function(data) {
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            if (data.stat !== 'ok' || !data.photoset || data.photoset.photo.length === 0) {
+                console.error('Flickr API error:', data.message || 'Could not load photoset or photoset is empty.');
+                slideshowContainer.innerHTML = 'Error loading announcements.';
+                return;
+            }
+
+            slideshowContainer.innerHTML = ''; // Clear any existing content
+
+            const photos = data.photoset.photo;
+            photos.forEach((photo) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'slide';
+                
+                const img = document.createElement('img');
+                // Construct the image URL. Using '_b' for large size (1024px).
+                img.src = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`;
+                img.alt = photo.title;
+
+                slideDiv.appendChild(img);
+                slideshowContainer.appendChild(slideDiv);
+            });
+
+            // Re-initialize the slideshow with the new dynamic content
+            initSlideshow();
+        };
+
         // --- Initial Setup and Intervals ---
         
         // Initial calls
         calculateAndDisplayPrayerTimes();
         updateUI();
+        loadFlickrSlideshow('144360725@N07', '72177720323417964');
         resizeDisplay();
         
         // Update the clock and next prayer info every second
