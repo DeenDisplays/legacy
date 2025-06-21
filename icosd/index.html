@@ -281,6 +281,7 @@
         };
 
         let prayerTimes = {};
+        let allPrayerEvents = [];
 
         // --- Core Functions ---
 
@@ -317,6 +318,9 @@
             const date = new Date();
             const isFriday = date.getDay() === 5;
 
+            // Reset the events array for recalculation
+            allPrayerEvents = [];
+
             // Get calculated times from library
             prayerTimes = prayerTimesInstance.getTimes(date, [latitude, longitude], timezone);
 
@@ -326,13 +330,12 @@
             const jumahDetailsEl = document.getElementById('jumah-details');
 
             if (isFriday) {
-                // Set fixed time for countdown logic
-                prayerTimes.dhuhr = '13:45'; 
-                
                 // Toggle UI elements for Jum'ah
                 dhuhrJumahNameEl.textContent = "Jum'ah";
                 dhuhrDetailsEl.style.display = 'none';
                 jumahDetailsEl.style.display = 'flex'; // Use flex for consistency with CSS
+                // Set fixed time for countdown logic
+                prayerTimes.dhuhr = '13:45'; 
             } else {
                 // Restore UI elements for Dhuhr on other days
                 dhuhrJumahNameEl.textContent = "Dhuhr";
@@ -340,22 +343,34 @@
                 jumahDetailsEl.style.display = 'none';
             }
 
-            // --- Populate all prayer times ---
+            // --- Populate all prayer and iqamah times and events ---
             for (const prayer in prayerTimeEls) {
                 const time24 = prayerTimes[prayer];
-                
                 prayerTimeEls[prayer].textContent = formatTo12Hour(time24);
                 
-                // Calculate and populate Iqamah time
                 const [h, m] = time24.split(':').map(Number);
-                const athaanDate = new Date();
-                athaanDate.setHours(h, m, 0, 0);
-                athaanDate.setMinutes(athaanDate.getMinutes() + IQAMAH_OFFSETS[prayer]);
-                const iqamahH = athaanDate.getHours();
-                const iqamahM = athaanDate.getMinutes();
-                const iqamahTime24 = `${String(iqamahH).padStart(2, '0')}:${String(iqamahM).padStart(2, '0')}`;
-                iqamahTimeEls[prayer].textContent = formatTo12Hour(iqamahTime24);
+                const eventDate = new Date();
+                eventDate.setHours(h, m, 0, 0);
+
+                if (isFriday && prayer === 'dhuhr') {
+                    allPrayerEvents.push({ name: 'dhuhr', type: "Jum'ah", date: eventDate });
+                } else {
+                    // Add Athaan event
+                    allPrayerEvents.push({ name: prayer, type: 'Athaan', date: eventDate });
+
+                    // Calculate, populate, and add Iqamah event
+                    const iqamahDate = new Date(eventDate.getTime());
+                    iqamahDate.setMinutes(iqamahDate.getMinutes() + IQAMAH_OFFSETS[prayer]);
+                    const iqamahH = iqamahDate.getHours();
+                    const iqamahM = iqamahDate.getMinutes();
+                    const iqamahTime24 = `${String(iqamahH).padStart(2, '0')}:${String(iqamahM).padStart(2, '0')}`;
+                    iqamahTimeEls[prayer].textContent = formatTo12Hour(iqamahTime24);
+                    allPrayerEvents.push({ name: prayer, type: 'Iqamah', date: iqamahDate });
+                }
             }
+
+            // Sort all events by time
+            allPrayerEvents.sort((a, b) => a.date - b.date);
         }
 
         /**
@@ -400,54 +415,45 @@
          * Find the next prayer and update the countdown and highlight.
          */
         function updateNextPrayer(now) {
-            const nowInMinutes = now.getHours() * 60 + now.getMinutes();
-            let nextPrayerName = '';
-            let nextPrayerTimeInMinutes = 0;
+            let nextEvent = allPrayerEvents.find(event => event.date > now);
 
-            const prayerOrder = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-
-            // Find the next prayer for today
-            for (const prayer of prayerOrder) {
-                if (!prayerTimes[prayer]) continue; 
-                const [h, m] = prayerTimes[prayer].split(':').map(Number);
-                const prayerTimeInMinutes = h * 60 + m;
-                if (prayerTimeInMinutes > nowInMinutes) {
-                    nextPrayerName = prayer;
-                    nextPrayerTimeInMinutes = prayerTimeInMinutes;
-                    break;
-                }
-            }
-
-            // If all prayers for today have passed, next prayer is Fajr of the next day
-            if (!nextPrayerName) {
+            // If all events for today have passed, the next event is Fajr athaan of the next day
+            if (!nextEvent) {
                 const tomorrow = new Date(now);
                 tomorrow.setDate(now.getDate() + 1);
                 const { latitude, longitude, timezone } = getUrlParameters();
                 const tomorrowPrayerTimes = prayerTimesInstance.getTimes(tomorrow, [latitude, longitude], timezone);
                 
-                nextPrayerName = 'fajr';
                 const [h, m] = tomorrowPrayerTimes.fajr.split(':').map(Number);
-                nextPrayerTimeInMinutes = (h * 60 + m) + (24 * 60); 
-            }
-            
-            // Calculate time remaining
-            let diffMinutes = nextPrayerTimeInMinutes - nowInMinutes;
-            if(diffMinutes < 0) { diffMinutes += 24 * 60; }
+                const nextEventDate = new Date(tomorrow);
+                nextEventDate.setHours(h, m, 0, 0);
 
-            const diffH = Math.floor(diffMinutes / 60);
-            const diffM = diffMinutes % 60;
-            
-            // Update UI text (use "Jum'ah" if Friday)
-            const isFriday = new Date().getDay() === 5;
-            let displayPrayerName = nextPrayerName.charAt(0).toUpperCase() + nextPrayerName.slice(1);
-            if(isFriday && nextPrayerName === 'dhuhr') {
-                displayPrayerName = "Jum'ah";
+                nextEvent = { name: 'fajr', type: 'Athaan', date: nextEventDate };
             }
-            nextPrayerInfoEl.innerHTML = `Next prayer is <strong>${displayPrayerName}</strong> in <span class="time-remaining">${diffH}h ${diffM}m</span>`;
+            
+            if (!nextEvent) { // Fallback
+                nextPrayerInfoEl.textContent = "Could not determine next prayer.";
+                return;
+            }
+
+            // Calculate time remaining
+            const diffMs = nextEvent.date - now;
+            const diffTotalMinutes = Math.floor(diffMs / 60000);
+            const diffH = Math.floor(diffTotalMinutes / 60);
+            const diffM = diffTotalMinutes % 60;
+            
+            // Update UI text
+            let displayPrayerName = nextEvent.name.charAt(0).toUpperCase() + nextEvent.name.slice(1);
+            
+            if (nextEvent.type === "Jum'ah") {
+                nextPrayerInfoEl.innerHTML = `<strong>Jum'ah</strong> begins in <span class="time-remaining">${diffH}h ${diffM}m</span>`;
+            } else {
+                nextPrayerInfoEl.innerHTML = `Next is <strong>${displayPrayerName} ${nextEvent.type}</strong> in <span class="time-remaining">${diffH}h ${diffM}m</span>`;
+            }
             
             // Update highlight on the NEXT prayer card
             document.querySelectorAll('.prayer').forEach(el => el.classList.remove('current'));
-            const nextCard = document.getElementById(`${nextPrayerName}-card`);
+            const nextCard = document.getElementById(`${nextEvent.name}-card`);
             if (nextCard) {
                 nextCard.classList.add('current');
             }
