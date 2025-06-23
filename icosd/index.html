@@ -548,17 +548,21 @@
             }
 
             const slides = document.querySelectorAll('.slideshow-container .slide');
-            if (slides.length <= 1) return; // Don't run slideshow if 1 or 0 slides
-
             let currentSlide = 0;
 
-            // Make the first slide visible immediately
+            // Make the first slide visible, if any slides exist.
             if (slides.length > 0) {
+                // Ensure no other slides are accidentally active on refresh
+                slides.forEach(slide => slide.classList.remove('active'));
                 slides[currentSlide].classList.add('active');
             }
 
+            // If there's only one slide (or none), we're done. Don't start the interval.
+            if (slides.length <= 1) {
+                return;
+            }
+
             slideshowInterval = setInterval(() => {
-                if (slides.length <= 1) return;
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
