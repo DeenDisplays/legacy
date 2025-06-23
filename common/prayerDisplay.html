@@ -213,6 +213,27 @@
             border-radius: 10px; /* Add rounded corners for a softer look */
         }
 
+        /* --- Settings Icon --- */
+        #settings-icon {
+            position: fixed;
+            top: 0px;
+            left: auto;
+            font-size: 2.5em; /* Adjust size as needed */
+            color: var(--accent-color);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 100; /* Ensure it's above other content but below modal */
+            text-shadow: 0 0 5px rgba(0,0,0,0.7);
+        }
+
+        #settings-icon:hover {
+            color: var(--highlight-accent-color);
+        }
+        #settings-icon.visible {
+            opacity: 0.7; /* Slightly transparent when visible */
+        }
+
         /* --- Configuration Modal --- */
         .modal {
             display: none; /* Hidden by default */
@@ -350,6 +371,9 @@
     </div>
 </div>
 
+<!-- Settings Icon -->
+<div id="settings-icon" class="material-symbols-outlined">settings</div>
+
 <!-- The Modal -->
 <div id="config-modal" class="modal">
     <div class="modal-content">
@@ -385,6 +409,7 @@
 <script src="https://deendisplays.github.io/legacy/common/PrayTimes.js"></script>
 <script src="https://deendisplays.github.io/legacy/common/hijricalendar-kuwaiti.js"></script>
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const PRAYER_CALCULATION_METHOD = 'ISNA';
@@ -418,6 +443,7 @@
         let prayerTimes = {};
         let allPrayerEvents = [];
         let slideshowInterval; // To hold the slideshow interval ID
+        let settingsIconTimeout; // To hold the timeout for hiding the settings icon
 
         // --- Core Functions ---
 
@@ -711,6 +737,57 @@
 
         // --- App Initialization ---
 
+        function isConfigValid(cfg) {
+            if (!cfg || typeof cfg !== 'object') return false;
+            
+            const requiredKeys = ['latitude', 'longitude', 'timezone', 'jumahTime', 'iqamahOffsets', 'flickrUserId', 'flickrAlbumId'];
+            for (const key of requiredKeys) {
+                if (!cfg.hasOwnProperty(key) || cfg[key] === null || cfg[key] === undefined) {
+                    return false;
+                }
+            }
+            
+            // Also check nested iqamahOffsets
+            if (typeof cfg.iqamahOffsets !== 'object') return false;
+            const iqamahKeys = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+            for (const key of iqamahKeys) {
+                if (!cfg.iqamahOffsets.hasOwnProperty(key) || cfg.iqamahOffsets[key] === null || cfg.iqamahOffsets[key] === undefined) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function prefillForm(cfg) {
+            if (!cfg || typeof cfg !== 'object') return;
+            
+            // Helper to set value if it exists
+            const setValue = (id, value) => {
+                if (value !== undefined && value !== null) {
+                    document.getElementById(id).value = value;
+                }
+            };
+
+            setValue('latitude', cfg.latitude);
+            setValue('longitude', cfg.longitude);
+            setValue('timezone', cfg.timezone);
+            setValue('jumahTime', cfg.jumahTime);
+            setValue('flickrUserId', cfg.flickrUserId);
+            setValue('flickrAlbumId', cfg.flickrAlbumId);
+
+            // Handle iqamahOffsets separately
+            if (cfg.iqamahOffsets && typeof cfg.iqamahOffsets === 'object') {
+                const offsets = [
+                    cfg.iqamahOffsets.fajr, cfg.iqamahOffsets.dhuhr,
+                    cfg.iqamahOffsets.asr, cfg.iqamahOffsets.maghrib,
+                    cfg.iqamahOffsets.isha
+                ];
+                const validOffsets = offsets.filter(v => v !== undefined && v !== null);
+                document.getElementById('iqamahOffsets').value = validOffsets.join(',');
+            }
+        }
+
         function initializeApp() {
             // Initial calls
             calculateAndDisplayPrayerTimes();
@@ -746,19 +823,48 @@
         const configModal = document.getElementById('config-modal');
         const configForm = document.getElementById('config-form');
 
-        // Load config from cookies or show modal
+        // Load and validate config from cookies or show modal
         const savedConfig = getCookie('displayConfig');
+        let parsedConfig = null;
         if (savedConfig) {
             try {
-                config = JSON.parse(savedConfig);
-                initializeApp();
+                parsedConfig = JSON.parse(savedConfig);
             } catch (e) {
-                console.error("Failed to parse config from cookie", e);
-                configModal.style.display = 'flex';
+                console.error("Failed to parse config from cookie. It will be ignored.", e);
             }
+        }
+
+        if (isConfigValid(parsedConfig)) {
+            config = parsedConfig;
+            initializeApp();
         } else {
+            prefillForm(parsedConfig); // Pre-fill with any partial data
             configModal.style.display = 'flex';
         }
+
+        // --- Settings Icon Logic ---
+        const settingsIcon = document.getElementById('settings-icon');
+        const HIDE_ICON_DELAY = 5000; // 5 seconds
+
+        function showSettingsIcon() {
+            settingsIcon.classList.add('visible');
+            clearTimeout(settingsIconTimeout);
+            settingsIconTimeout = setTimeout(hideSettingsIcon, HIDE_ICON_DELAY);
+        }
+
+        function hideSettingsIcon() {
+            settingsIcon.classList.remove('visible');
+        }
+
+        // Show icon on mouse movement or touch
+        document.addEventListener('mousemove', showSettingsIcon);
+        document.addEventListener('touchstart', showSettingsIcon);
+
+        // Open modal on icon click, pre-filling it with current config
+        settingsIcon.addEventListener('click', () => {
+            prefillForm(config);
+            configModal.style.display = 'flex';
+        });
 
         // Handle form submission
         configForm.addEventListener('submit', function(e) {
