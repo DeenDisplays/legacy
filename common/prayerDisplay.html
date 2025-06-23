@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Prayer Times</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styling --- */
+        :root {
+            --bg-color: #1a3a1a; /* Dark Green */
+            --primary-text-color: #e0dcd1; /* Warm Cream */
+            --accent-color: #e6b85c; /* Gold */
+            --card-bg-color: #2e532e; /* Lighter Forest Green */
+            --highlight-bg-color: #102410; /* Very Dark Green */
+            --highlight-accent-color: #ffc107; /* Brighter Gold */
+            --pattern-color: 'rgba(224, 220, 209, 0.05)'; /* Pattern color based on text color */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Amiri', serif;
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Main Container for fixed aspect ratio --- */
+        #display-wrapper {
+            width: 960px;
+            height: 540px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            transform-origin: center center;
+            background-color: var(--bg-color);
+            /* Subtle geometric pattern using URL-encoded SVG */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23e6b85c' fill-opacity='0.06'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 40h2l-2 2V40zm-2 2h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zm-2 0h2l-2 2h-2zM0 40h2l-2 2V40zm2-2h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2 0h2l-2 2h-2zm2-38h2l-2 2V2zm0 2h2l-2 2V4zm0 2h2l-2 2V6zm0 2h2l-2 2V8zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zM40 0h2l-2 2V0zm2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 2h2l-2 2h-2zm-2 38h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zm0-2h2l-2 2v-2zM2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 0h2l-2 2V0zm2 38h2l-2 2v-2zm0 2h2l-2 2v-2zm0-38h2l-2 2V2zm0 2h2l-2 2V4zm0 2h2l-2 2V6zm0 2h2l-2 2V8zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zm0 2h2l-2 2v-2zM80 80h-2l2-2v2zm-2-2h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 38h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zM40 80h-2l2-2v2zm-2-2h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2 0h-2l2 2h2zm2-38h-2l2-2v2zm0 2h-2l2-2v2zm-38 38h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm38-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm0-2h-2l2-2v2zm-38-2h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zm-2 0h-2l2-2v2zM80 0h-2l2 2V0zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 2h-2l2 2h2zm-2 38h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zm0 2h-2l2 2v-2zM40 40h2l-2-2v2zm2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-2h2l-2-2h-2zm-2-38h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zm0 2h2l-2-2v2zM2 40h2l-2-2v2zm2-2h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2 0h2l-2-2h-2zm2-38h2l-2-2v2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zm-2 2h2l-2-2h-2zM42 80h-2l2-2v2zm-2-2h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2 0h-2l2 2h2zm-2-38h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zm0 2h-2l2-2v2zM80 42v-2l-2 2h2zm-2-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm38 2v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-38-2v-2l-2 2h2zm2-2v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zm2 0v-2l-2 2h2zM40 2v-2l-2 2h2zm-2-2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 2v-2l-2 2h2zm2 38v-2l-2 2h2zm0-2v-2l-2 2h2zm-38-38v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm-2 2v-2l-2 2h2zm38 2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm0-2v-2l-2 2h2zm-38-2v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zm-2 0v-2l-2 2h2zM80 78v2l2-2h-2zm-2 2v2l2-2h-2zM0 80v-2l2 2H0zm2-2v-2l2 2H2zm2 0v-2l2 2H4zm2 0v-2l2 2H6zm2 0v-2l2 2H8zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zm2 0v-2l2 2h-2zM40 80v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zm38 2v-2l2 2H40zm-38-2v-2l2 2H2zM80 0v2l2-2H80z' /%3E%3C/svg%3E");
+        }
+
+        /* --- Header: Dates --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 30px; /* Reduced padding */
+            background-color: rgba(0,0,0,0.2);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em; /* Adjusted font size */
+            font-weight: 400;
+            border-bottom: 1px solid var(--accent-color);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        #gregorian-date { text-align: left; }
+        #hijri-date { text-align: right; }
+
+        /* --- Body Layout --- */
+        #content-body {
+            flex-grow: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        #left-column {
+            width: 66.666%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #right-column {
+            width: 33.333%;
+            height: 100%;
+            padding: 20px; /* This provides the margin around the slideshow container */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
+        /* --- Main Content: Clock --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        #clock {
+            font-family: 'Cinzel', serif;
+            font-size: 6em; /* Adjusted font size */
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+        
+        #next-prayer-info {
+            font-size: 1.5em; /* Adjusted font size */
+            margin-top: 10px;
+            font-weight: 400;
+        }
+        
+        #next-prayer-info strong,
+        #next-prayer-info .time-remaining {
+            font-weight: 700;
+            color: var(--highlight-accent-color);
+        }
+
+        /* --- Footer: Prayer Times --- */
+        .footer {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            padding: 8px;
+            background-color: rgba(0,0,0,0.2);
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .prayer {
+            text-align: center;
+            padding: 8px 5px; /* Reduced padding */
+            transition: background-color 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .prayer.current {
+            background-color: var(--highlight-bg-color);
+            border: 1px solid var(--highlight-accent-color);
+            transform: scale(1.03);
+            box-shadow: 0 0 15px -2px var(--highlight-accent-color);
+        }
+
+        .prayer-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5em; /* Adjusted font size */
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .prayer-details {
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             margin-top: 2px;
+        }
+
+        .prayer-type {
+            font-size: 1em; /* Adjusted font size */
+            color: #aaa;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .prayer-time {
+            font-family: 'Amiri', serif;
+            font-size: 1.3em; /* Adjusted font size */
+            font-weight: 700;
+            color: var(--accent-color);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .jumah-note {
+            text-align: center;
+            font-family: 'Amiri', serif;
+            font-size: 1.1em; /* Adjusted font size */
+            padding: 4px; /* Reduced padding */
+            background-color: var(--highlight-bg-color);
+            color: var(--highlight-accent-color);
+        }
+
+        /* --- Slideshow Styling --- */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* This clips the images if they exceed the container's bounds */
+        }
+
+        .slideshow-container .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slideshow-container .slide.active {
+            opacity: 1;
+        }
+        .slideshow-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures the entire image is visible, preserving aspect ratio */ 
+            border-radius: 10px; /* Add rounded corners for a softer look */
+        }
+
+        /* --- Configuration Modal --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            padding: 25px;
+            border: 1px solid var(--accent-color);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            color: var(--primary-text-color);
+        }
+
+        .modal-content h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+
+        .modal-content form { display: flex; flex-direction: column; }
+        .modal-content label { margin-top: 12px; font-size: 1.1em; }
+        .modal-content input[type="text"] {
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .modal-content input[type="submit"] {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .modal-content input[type="submit"]:hover { background-color: var(--highlight-accent-color); }
+    </style>
+</head>
+<body>
+<div id="display-wrapper">
+    <!-- Header for Gregorian and Hijri Dates -->
+    <div class="header">
+        <div id="gregorian-date">Loading...</div>
+        <div id="hijri-date">Loading...</div>
+    </div>
+
+    <div id="content-body">
+        <div id="left-column">
+            <!-- Main Content for Clock and Next Prayer Info -->
+            <div class="main-content">
+                <div id="clock">--:--</div>
+                <div id="next-prayer-info">Calculating prayer times...</div>
+            </div>
+
+            <!-- Footer for Prayer Times -->
+            <div class="footer">
+                <div class="prayer" id="fajr-card">
+                    <div class="prayer-name">Fajr</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="fajr">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="fajr-iqamah">--:--</div>
+                    </div>
+                </div>
+                <div class="prayer" id="dhuhr-card">
+                    <div class="prayer-name" id="dhuhr-jumah-name">Dhuhr</div>
+                    <!-- Dhuhr Details (default) -->
+                    <div id="dhuhr-details" class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="dhuhr">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="dhuhr-iqamah">--:--</div>
+                    </div>
+                    <!-- Jum'ah Details (hidden by default) -->
+                    <div id="jumah-details" class="prayer-details" style="display: none;">
+                        <div class="prayer-type">Begins at</div>
+                        <div class="prayer-time" style="color: var(--accent-color);">1:45 PM</div>
+                    </div>
+                </div>
+                <div class="prayer" id="asr-card">
+                    <div class="prayer-name">Asr</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="asr">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="asr-iqamah">--:--</div>
+                    </div>
+                </div>
+                <div class="prayer" id="maghrib-card">
+                    <div class="prayer-name">Maghrib</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="maghrib">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="maghrib-iqamah">--:--</div>
+                    </div>
+                </div>
+                <div class="prayer" id="isha-card">
+                    <div class="prayer-name">Isha</div>
+                    <div class="prayer-details">
+                        <div class="prayer-type">Athaan</div>
+                        <div class="prayer-time" id="isha">--:--</div>
+                        <div class="prayer-type" style="margin-top: 5px;">Iqamah</div>
+                        <div class="prayer-time" id="isha-iqamah">--:--</div>
+                    </div>
+                </div>
+            </div>
+            <div id="jumah-note" class="jumah-note">
+                Salaatul Jum'ah begins at 1:45 PM
+            </div>
+        </div>
+        <div id="right-column">
+            <div class="slideshow-container">
+                <!-- Slideshow images will be loaded here from Flickr -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="config-modal" class="modal">
+    <div class="modal-content">
+        <h3>Display Configuration</h3>
+        <p>Please provide the necessary information to set up the display.</p>
+        <form id="config-form">
+            <label for="latitude">Latitude</label>
+            <input id="latitude" type="text" name="latitude" required placeholder="e.g., 32.77">
+            
+            <label for="longitude">Longitude</label>
+            <input id="longitude" type="text" name="longitude" required placeholder="e.g., -96.77">
+
+            <label for="timezone">Timezone (e.g., -5 for EST)</label>
+            <input id="timezone" type="text" name="timezone" required placeholder="e.g., -5">
+
+            <label for="jumahTime">Jum'ah Time (24-hour format)</label>
+            <input id="jumahTime" type="text" name="jumahTime" required placeholder="e.g., 13:45">
+
+            <label for="iqamahOffsets">Iqamah Offsets (Fajr,Dhuhr,Asr,Maghrib,Isha)</label>
+            <input id="iqamahOffsets" type="text" name="iqamahOffsets" required placeholder="e.g., 25,25,25,10,25">
+
+            <label for="flickrUserId">Flickr User ID</label>
+            <input id="flickrUserId" type="text" name="flickrUserId" required placeholder="e.g., 144360725@N07">
+
+            <label for="flickrAlbumId">Flickr Album ID</label>
+            <input id="flickrAlbumId" type="text" name="flickrAlbumId" required placeholder="e.g., 72177720323417964">
+
+            <input type="submit" value="Save and Start Display">
+        </form>
+    </div>
+</div>
+
+<script src="https://deendisplays.github.io/legacy/common/PrayTimes.js"></script>
+<script src="https://deendisplays.github.io/legacy/common/hijricalendar-kuwaiti.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const PRAYER_CALCULATION_METHOD = 'ISNA';
+        const HIJRI_DATE_ADJUSTMENT = 0; // Days to add/subtract from calculated Hijri date
+
+        const prayerTimesInstance = new PrayTimes(PRAYER_CALCULATION_METHOD);
+
+        // --- UI Elements ---
+        const clockEl = document.getElementById('clock');
+        const gregorianDateEl = document.getElementById('gregorian-date');
+        const hijriDateEl = document.getElementById('hijri-date');
+        const nextPrayerInfoEl = document.getElementById('next-prayer-info');
+        
+        const prayerTimeEls = {
+            fajr: document.getElementById('fajr'),
+            dhuhr: document.getElementById('dhuhr'),
+            asr: document.getElementById('asr'),
+            maghrib: document.getElementById('maghrib'),
+            isha: document.getElementById('isha'),
+        };
+        
+        const iqamahTimeEls = {
+            fajr: document.getElementById('fajr-iqamah'),
+            dhuhr: document.getElementById('dhuhr-iqamah'),
+            asr: document.getElementById('asr-iqamah'),
+            maghrib: document.getElementById('maghrib-iqamah'),
+            isha: document.getElementById('isha-iqamah'),
+        };
+
+        let config = {}; // Will hold all configuration
+        let prayerTimes = {};
+        let allPrayerEvents = [];
+        let slideshowInterval; // To hold the slideshow interval ID
+
+        // --- Core Functions ---
+
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        /**
+         * Formats a 24-hour time string (HH:mm) to a 12-hour AM/PM format (h:mm AM/PM).
+         */
+        function formatTo12Hour(timeString) {
+            if (typeof timeString !== 'string' || !timeString.includes(':')) return '--:--';
+            const [hours24, minutes] = timeString.split(':');
+            const hoursNum = parseInt(hours24, 10);
+            const ampm = hoursNum >= 12 ? 'PM' : 'AM';
+            let hours12 = hoursNum % 12;
+            hours12 = hours12 ? hours12 : 12; // The hour '0' should be '12'
+            return `${hours12}:${minutes} ${ampm}`;
+        }
+
+        /**
+         * Calculate and display prayer times, with special handling for Friday.
+         */
+        function calculateAndDisplayPrayerTimes() {
+            const { latitude, longitude, timezone, jumahTime, iqamahOffsets } = config;
+            const date = new Date();
+            const isFriday = date.getDay() === 5;
+
+            // Reset the events array for recalculation
+            allPrayerEvents = [];
+
+            // Get calculated times from library
+            prayerTimes = prayerTimesInstance.getTimes(date, [latitude, longitude], timezone);
+
+            // --- Jum'ah Special Handling ---
+            const dhuhrJumahNameEl = document.getElementById('dhuhr-jumah-name');
+            const dhuhrDetailsEl = document.getElementById('dhuhr-details');
+            const jumahDetailsEl = document.getElementById('jumah-details');
+
+            if (isFriday) {
+                // Toggle UI elements for Jum'ah
+                dhuhrJumahNameEl.textContent = "Jum'ah";
+                dhuhrDetailsEl.style.display = 'none';
+                jumahDetailsEl.style.display = 'flex'; // Use flex for consistency with CSS
+                // Set fixed time for countdown logic
+                prayerTimes.dhuhr = jumahTime; 
+            } else {
+                // Restore UI elements for Dhuhr on other days
+                dhuhrJumahNameEl.textContent = "Dhuhr";
+                dhuhrDetailsEl.style.display = 'flex'; // Use flex for consistency with CSS
+                jumahDetailsEl.style.display = 'none';
+            }
+
+            // --- Populate all prayer and iqamah times and events ---
+            for (const prayer in prayerTimeEls) {
+                const time24 = prayerTimes[prayer];
+                prayerTimeEls[prayer].textContent = formatTo12Hour(time24);
+                
+                const [h, m] = time24.split(':').map(Number);
+                const eventDate = new Date();
+                eventDate.setHours(h, m, 0, 0);
+
+                if (isFriday && prayer === 'dhuhr') {
+                    allPrayerEvents.push({ name: 'dhuhr', type: "Jum'ah", date: eventDate });
+                } else {
+                    // Add Athaan event
+                    allPrayerEvents.push({ name: prayer, type: 'Athaan', date: eventDate });
+
+                    // Calculate, populate, and add Iqamah event
+                    const iqamahDate = new Date(eventDate.getTime());
+                    iqamahDate.setMinutes(iqamahDate.getMinutes() + iqamahOffsets[prayer]);
+                    const iqamahH = iqamahDate.getHours();
+                    const iqamahM = iqamahDate.getMinutes();
+                    const iqamahTime24 = `${String(iqamahH).padStart(2, '0')}:${String(iqamahM).padStart(2, '0')}`;
+                    iqamahTimeEls[prayer].textContent = formatTo12Hour(iqamahTime24);
+                    allPrayerEvents.push({ name: prayer, type: 'Iqamah', date: iqamahDate });
+                }
+            }
+
+            // Sort all events by time
+            allPrayerEvents.sort((a, b) => a.date - b.date);
+        }
+
+        /**
+         * Converts a Gregorian date to a formatted Hijri date string.
+         */
+        function getFormattedHijriDate(adjustment) {
+            try {
+                return getIslamicDate(adjustment);
+            } catch (e) {
+                console.error("Error converting to Hijri date:", e);
+                return "Error in Hijri conversion";
+            }
+        }
+
+        /**
+         * Update all UI elements that change over time.
+         */
+        function updateUI() {
+            const now = new Date();
+            
+            // Update Clock to 12-hour AM/PM format without seconds
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            clockEl.innerHTML = `${hours}:${minutes} <span style="font-size: 0.5em; vertical-align: text-top; font-weight: 400;">${ampm}</span>`;
+
+            // Update Gregorian Date
+            gregorianDateEl.textContent = now.toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            // Update Hijri Date
+            hijriDateEl.textContent = getFormattedHijriDate(HIJRI_DATE_ADJUSTMENT);
+            
+            // Update Next Prayer Info and Highlight
+            updateNextPrayer(now);
+        }
+        
+        /**
+         * Find the next prayer and update the countdown and highlight.
+         */
+        function updateNextPrayer(now) {
+            let nextEvent = allPrayerEvents.find(event => event.date > now);
+
+            // If all events for today have passed, the next event is Fajr athaan of the next day
+            if (!nextEvent) {
+                const tomorrow = new Date(now);
+                tomorrow.setDate(now.getDate() + 1);
+                const { latitude, longitude, timezone } = config;
+                const tomorrowPrayerTimes = prayerTimesInstance.getTimes(tomorrow, [latitude, longitude], timezone);
+                
+                const [h, m] = tomorrowPrayerTimes.fajr.split(':').map(Number);
+                const nextEventDate = new Date(tomorrow);
+                nextEventDate.setHours(h, m, 0, 0);
+
+                nextEvent = { name: 'fajr', type: 'Athaan', date: nextEventDate };
+            }
+            
+            if (!nextEvent) { // Fallback
+                nextPrayerInfoEl.textContent = "Could not determine next prayer.";
+                return;
+            }
+
+            // Calculate time remaining
+            const diffMs = nextEvent.date - now;
+            const diffTotalMinutes = Math.floor(diffMs / 60000);
+            const diffH = Math.floor(diffTotalMinutes / 60);
+            const diffM = diffTotalMinutes % 60;
+            
+            // Update UI text
+            let displayPrayerName = nextEvent.name.charAt(0).toUpperCase() + nextEvent.name.slice(1);
+            
+            if (nextEvent.type === "Jum'ah") {
+                nextPrayerInfoEl.innerHTML = `<strong>Jum'ah</strong> begins in <span class="time-remaining">${diffH}h ${diffM}m</span>`;
+            } else {
+                nextPrayerInfoEl.innerHTML = `Next is <strong>${displayPrayerName} ${nextEvent.type}</strong> in <span class="time-remaining">${diffH}h ${diffM}m</span>`;
+            }
+            
+            // Update highlight on the NEXT prayer card
+            document.querySelectorAll('.prayer').forEach(el => el.classList.remove('current'));
+            const nextCard = document.getElementById(`${nextEvent.name}-card`);
+            if (nextCard) {
+                nextCard.classList.add('current');
+            }
+        }
+
+        /**
+         * Resizes the main wrapper to fit the window while maintaining aspect ratio.
+         */
+        function resizeDisplay() {
+            const wrapper = document.getElementById('display-wrapper');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const aspectRatio = 960 / 540;
+
+            let newWidth = windowWidth;
+            let newHeight = newWidth / aspectRatio;
+
+            if (newHeight > windowHeight) {
+                newHeight = windowHeight;
+                newWidth = newHeight * aspectRatio;
+            }
+            
+            const scale = newWidth / 960;
+            wrapper.style.transform = `scale(${scale})`;
+        }
+
+        /**
+         * Initializes and runs the slideshow on the right column.
+         */
+        function initSlideshow() {
+            // Clear any existing slideshow interval to prevent multiple running timers
+            if (slideshowInterval) {
+                clearInterval(slideshowInterval);
+            }
+
+            const slides = document.querySelectorAll('.slideshow-container .slide');
+            let currentSlide = 0;
+
+            // Make the first slide visible, if any slides exist.
+            if (slides.length > 0) {
+                // Ensure no other slides are accidentally active on refresh
+                slides.forEach(slide => slide.classList.remove('active'));
+                slides[currentSlide].classList.add('active');
+            }
+
+            // If there's only one slide (or none), we're done. Don't start the interval.
+            if (slides.length <= 1) {
+                return;
+            }
+
+            slideshowInterval = setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 10000); // Change slide every 10 seconds
+        }
+
+        /**
+         * Loads photos from a Flickr album by creating a JSONP script tag.
+         * @param {string} userId - The Flickr user ID.
+         * @param {string} albumId - The Flickr album/photoset ID.
+         */
+        function loadFlickrSlideshow(userId, albumId) {
+            const apiKey = '5c053e417b99b7fe023ee6554a95c25b'; // Public API key from other project files
+            const script = document.createElement('script');
+            // Use jsoncallback parameter for JSONP. The callback function must be globally accessible.
+            script.src = `https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}&photoset_id=${albumId}&user_id=${userId}&format=json&jsoncallback=jsonFlickrApi`;
+            
+            script.onerror = () => {
+                console.error('Failed to load Flickr script.');
+                window.jsonFlickrApi({ stat: 'fail', message: 'Could not load Flickr script.' });
+                document.head.removeChild(script);
+            };
+            
+            document.head.appendChild(script);
+        }
+
+        /**
+         * Callback function for the Flickr JSONP API call.
+         * This is attached to the window object to be globally accessible.
+         * @param {object} data - The data object from Flickr.
+         */
+        window.jsonFlickrApi = function(data) {
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            if (data.stat !== 'ok' || !data.photoset || data.photoset.photo.length === 0) {
+                console.error('Flickr API error:', data.message || 'Could not load photoset or photoset is empty.');
+                slideshowContainer.innerHTML = 'Error loading announcements.';
+                return;
+            }
+
+            slideshowContainer.innerHTML = ''; // Clear any existing content
+
+            const photos = data.photoset.photo;
+            photos.forEach((photo) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'slide';
+                
+                const img = document.createElement('img');
+                // Construct the image URL. Using '_b' for large size (1024px).
+                img.src = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`;
+                img.alt = photo.title;
+
+                slideDiv.appendChild(img);
+                slideshowContainer.appendChild(slideDiv);
+            });
+
+            // Re-initialize the slideshow with the new dynamic content
+            initSlideshow();
+        };
+
+        // --- App Initialization ---
+
+        function initializeApp() {
+            // Initial calls
+            calculateAndDisplayPrayerTimes();
+            updateUI();
+            loadFlickrSlideshow(config.flickrUserId, config.flickrAlbumId);
+            resizeDisplay();
+            
+            // Update the clock and next prayer info every second
+            setInterval(updateUI, 1000);
+            
+            // Recalculate all times at midnight.
+            setInterval(() => {
+                const now = new Date();
+                if (now.getHours() === 0 && now.getMinutes() === 0) {
+                     calculateAndDisplayPrayerTimes();
+                }
+            }, 60 * 1000);
+            
+            // Handle window resizing
+            window.addEventListener('resize', resizeDisplay);
+
+            // Refresh slideshow content from Flickr periodically
+            setInterval(() => {
+                loadFlickrSlideshow(config.flickrUserId, config.flickrAlbumId);
+            }, 10 * 60 * 1000); // 10 minutes
+
+            // Full page refresh periodically to prevent any long-term issues
+            setInterval(() => {
+                location.reload();
+            }, 24 * 60 * 60 * 1000); // 24 hours
+        }
+
+        const configModal = document.getElementById('config-modal');
+        const configForm = document.getElementById('config-form');
+
+        // Load config from cookies or show modal
+        const savedConfig = getCookie('displayConfig');
+        if (savedConfig) {
+            try {
+                config = JSON.parse(savedConfig);
+                initializeApp();
+            } catch (e) {
+                console.error("Failed to parse config from cookie", e);
+                configModal.style.display = 'flex';
+            }
+        } else {
+            configModal.style.display = 'flex';
+        }
+
+        // Handle form submission
+        configForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(configForm);
+            const iqamahOffsetsRaw = formData.get('iqamahOffsets').split(',').map(Number);
+            
+            config = {
+                latitude: parseFloat(formData.get('latitude')),
+                longitude: parseFloat(formData.get('longitude')),
+                timezone: parseFloat(formData.get('timezone')),
+                jumahTime: formData.get('jumahTime'),
+                iqamahOffsets: {
+                    fajr: iqamahOffsetsRaw[0], dhuhr: iqamahOffsetsRaw[1],
+                    asr: iqamahOffsetsRaw[2], maghrib: iqamahOffsetsRaw[3],
+                    isha: iqamahOffsetsRaw[4],
+                },
+                flickrUserId: formData.get('flickrUserId'),
+                flickrAlbumId: formData.get('flickrAlbumId'),
+            };
+
+            setCookie('displayConfig', JSON.stringify(config), 365); // Save for 1 year
+            configModal.style.display = 'none';
+            initializeApp();
+        });
+    });
+</script>
+
+</body>
+</html>
