@@ -73,13 +73,7 @@ function setTimes(coordinates, timezone, offset, givenMethod, ishaFixedHour, ish
 
   var prayers = ["fajr", "dhuhr", "asr", "maghrib", "isha"];
 
-  if (ishaFixedHour != undefined && ishaFixedMinute != undefined) {
-    const ishaHour =  parseInt(times.isha.split(':')[0]);
-    const ishaMinute = parseInt(times.isha.split(':')[1].substring(0,2));
-    if (ishaHour < ishaFixedHour || (ishaHour == ishaFixedHour && ishaMinute < ishaFixedMinute)) {
-      times.isha = ishaFixedHour + ":" + (ishaFixedMinute == 0 ? "00" : ishaFixedMinute) + " PM";
-    }
-  }
+  times = adjustIshaTime(times, ishaFixedHour, ishaFixedMinute);
 
   prayers.map(p => $("#" + p + "Time").html(times[p].toUpperCase()));
 

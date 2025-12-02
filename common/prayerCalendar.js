@@ -10,8 +10,8 @@ function fillCalendar(date, hijriMonth) {
 
     var timeNames = ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"];
     var offsets = {"fajr":25, "dhuhr":20, "asr":20, "maghrib":10, "isha":10};
-    const ishaFixedHour = 6;
-    const ishaFixedMinute = 30;
+    const ishaFixedHour = 7;
+    const ishaFixedMinute = 0;
 
     var PT = new PrayTimes('ISNA');
     var iqaamahPT = new PrayTimes('ISNA');
@@ -32,12 +32,7 @@ function fillCalendar(date, hijriMonth) {
         if (date.getDay() == 5)
             iqaamahTimes.dhuhr = '1:00 pm';
 
-        const ishaHour =  parseInt(iqaamahTimes.isha.split(':')[0]);
-        const ishaMinute = parseInt(iqaamahTimes.isha.split(':')[1].substring(0,2));
-        if (ishaHour < ishaFixedHour || (ishaHour == ishaFixedHour && ishaMinute < ishaFixedMinute)) {
-            iqaamahTimes.isha = ishaFixedHour + ":" + ishaFixedMinute + " PM";
-        }    
-
+        iqaamahTimes = adjustIshaTime(iqaamahTimes, ishaFixedHour, ishaFixedMinute);
         addCell(row, i);
 
         addCell(row, date.toLocaleDateString('en-US', { weekday: 'short' }));
