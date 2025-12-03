@@ -62,7 +62,6 @@ function refreshDaily() {
   }
 }
 
-function setTimes(coordinates, timezone, offset, givenMethod, ishaFixedHour, ishaFixedMinute) {
 function setTimes(coordinates, timezone, offset, givenMethod, ishaFixedHour, ishaFixedMinute, asrFixedHour, asrFixedMinute) {
   var method = (typeof givenMethod == 'undefined') ? 'ISNA' : givenMethod;
   var PT = new PrayTimes(method);
