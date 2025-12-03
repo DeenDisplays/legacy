@@ -29,10 +29,12 @@ function fillCalendar(date, hijriMonth) {
         //TODO: re-use logic in time.js
         times = PT.getTimes(date, [40.73, -74.18], -5, 'auto', '12h');
         iqaamahTimes = iqaamahPT.getTimes(date, [40.73, -74.18], -5, 'auto', '12h');
-        if (date.getDay() == 5)
+        if (date.getDay() == 5) { // Friday
             iqaamahTimes.dhuhr = '1:00 pm';
+            iqaamahTimes = PrayerUtils.adjustAsrTime(iqaamahTimes, times, 14, 40); // 2:40 PM
+        }
 
-        iqaamahTimes = adjustIshaTime(iqaamahTimes, ishaFixedHour, ishaFixedMinute);
+        iqaamahTimes = PrayerUtils.adjustIshaTime(iqaamahTimes, ishaFixedHour, ishaFixedMinute);
         addCell(row, i);
 
         addCell(row, date.toLocaleDateString('en-US', { weekday: 'short' }));
