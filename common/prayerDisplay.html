@@ -328,7 +328,7 @@
                     <!-- Jum'ah Details (hidden by default) -->
                     <div id="jumah-details" class="prayer-details" style="display: none;">
                         <div class="prayer-type">Begins at</div>
-                        <div class="prayer-time" style="color: var(--accent-color);">1:45 PM</div>
+                        <div id="jumah-time" class="prayer-time" style="color: var(--accent-color);">1:45 PM</div>
                     </div>
                 </div>
                 <div class="prayer" id="asr-card">
@@ -360,7 +360,7 @@
                 </div>
             </div>
             <div id="jumah-note" class="jumah-note">
-                Salaatul Jum'ah begins at 1:45 PM
+                <!-- This will be populated by JavaScript -->
             </div>
         </div>
         <div id="right-column">
@@ -499,12 +499,19 @@
             const dhuhrJumahNameEl = document.getElementById('dhuhr-jumah-name');
             const dhuhrDetailsEl = document.getElementById('dhuhr-details');
             const jumahDetailsEl = document.getElementById('jumah-details');
+            const jumahTimeEl = document.getElementById('jumah-time');
+            const jumahNoteEl = document.getElementById('jumah-note');
+            const formattedJumahTime = formatTo12Hour(jumahTime);
+            jumahNoteEl.textContent = `Salaatul Jum'ah begins at ${formattedJumahTime}`;
+            jumahNoteEl.style.display = 'block';
+
 
             if (isFriday) {
                 // Toggle UI elements for Jum'ah
                 dhuhrJumahNameEl.textContent = "Jum'ah";
                 dhuhrDetailsEl.style.display = 'none';
                 jumahDetailsEl.style.display = 'flex'; // Use flex for consistency with CSS
+                jumahTimeEl.textContent = formattedJumahTime;
                 // Set fixed time for countdown logic
                 prayerTimes.dhuhr = jumahTime; 
             } else {
