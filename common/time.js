@@ -77,7 +77,10 @@ function setTimes(coordinates, timezone, offset, givenMethod, ishaFixedHour, ish
 
  
   times = adjustIshaTime(times, ishaFixedHour, ishaFixedMinute);
-  times = adjustAsrTime(times, athanTimes, asrFixedHour, asrFixedMinute);
+  
+  if (date.getDay() == 5) { // Friday
+    times = adjustAsrTime(times, athanTimes, asrFixedHour, asrFixedMinute);
+  }
 
   prayers.map(p => $("#" + p + "Time").html(times[p].toUpperCase()));
 
