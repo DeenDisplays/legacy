@@ -392,14 +392,14 @@
             <label for="jumahTime">Jum'ah Time (24-hour format)</label>
             <input id="jumahTime" type="text" name="jumahTime" required placeholder="e.g., 13:45">
 
-            <label for="iqamahOffsets">Iqamah Offsets (Fajr,Dhuhr,Asr,Maghrib,Isha)</label>
+            <label for="iqamahOffsets">Iqamah Offsets (Fajr,Dhuhr,Asr,Maghrib,Isha) in minutes</label>
             <input id="iqamahOffsets" type="text" name="iqamahOffsets" required placeholder="e.g., 25,25,25,10,25">
 
-            <label for="flickrUserId">Flickr User ID</label>
-            <input id="flickrUserId" type="text" name="flickrUserId" required placeholder="e.g., 144360725@N07">
+            <label for="flickrUserId">Flickr User ID (Optional)</label>
+            <input id="flickrUserId" type="text" name="flickrUserId" placeholder="e.g., 144360725@N07">
 
-            <label for="flickrAlbumId">Flickr Album ID</label>
-            <input id="flickrAlbumId" type="text" name="flickrAlbumId" required placeholder="e.g., 72177720323417964">
+            <label for="flickrAlbumId">Flickr Album ID (Optional)</label>
+            <input id="flickrAlbumId" type="text" name="flickrAlbumId" placeholder="e.g., 72177720323417964">
 
             <input type="submit" value="Save and Start Display">
         </form>
@@ -747,10 +747,10 @@
         function isConfigValid(cfg) {
             if (!cfg || typeof cfg !== 'object') return false;
             
-            const requiredKeys = ['latitude', 'longitude', 'timezone', 'jumahTime', 'iqamahOffsets', 'flickrUserId', 'flickrAlbumId'];
+            const requiredKeys = ['latitude', 'longitude', 'timezone', 'jumahTime', 'iqamahOffsets'];
             for (const key of requiredKeys) {
                 if (!cfg.hasOwnProperty(key) || cfg[key] === null || cfg[key] === undefined) {
-                    return false;
+                    return false; // A core required field is missing
                 }
             }
             
@@ -797,9 +797,22 @@
 
         function initializeApp() {
             // Initial calls
+            const leftColumn = document.getElementById('left-column');
+            const rightColumn = document.getElementById('right-column');
+
+            // Check for Flickr config and adjust layout
+            if (config.flickrUserId && config.flickrAlbumId) {
+                loadFlickrSlideshow(config.flickrUserId, config.flickrAlbumId);
+                // Refresh slideshow content from Flickr periodically
+                setInterval(() => {
+                    loadFlickrSlideshow(config.flickrUserId, config.flickrAlbumId);
+                }, 10 * 60 * 1000); // 10 minutes
+            } else {
+                rightColumn.style.display = 'none';
+                leftColumn.style.width = '100%';
+            }
             calculateAndDisplayPrayerTimes();
             updateUI();
-            loadFlickrSlideshow(config.flickrUserId, config.flickrAlbumId);
             resizeDisplay();
             
             // Update the clock and next prayer info every second
@@ -815,11 +828,6 @@
             
             // Handle window resizing
             window.addEventListener('resize', resizeDisplay);
-
-            // Refresh slideshow content from Flickr periodically
-            setInterval(() => {
-                loadFlickrSlideshow(config.flickrUserId, config.flickrAlbumId);
-            }, 10 * 60 * 1000); // 10 minutes
 
             // Full page refresh periodically to prevent any long-term issues
             setInterval(() => {
