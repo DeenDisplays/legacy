@@ -32,3 +32,8 @@ function adjustAsrTime(iqaamahTimes, adhanTimes, asrFixedHour, asrFixedMinute) {
     }
     return iqaamahTimes;
 }
+
+var PrayerUtils = {
+    adjustIshaTime: adjustIshaTime,
+    adjustAsrTime: adjustAsrTime
+};

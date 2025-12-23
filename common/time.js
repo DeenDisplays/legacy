@@ -78,7 +78,8 @@ function setTimes(coordinates, timezone, offset, givenMethod, ishaFixedHour, ish
  
   times = adjustIshaTime(times, ishaFixedHour, ishaFixedMinute);
   
-  if (date.getDay() == 5) { // Friday
+  // If fixed Asr time parameters are provided, adjust Asr iqaamah accordingly.
+  if (typeof asrFixedHour !== 'undefined' && typeof asrFixedMinute !== 'undefined') {
     times = adjustAsrTime(times, athanTimes, asrFixedHour, asrFixedMinute);
   }
 
