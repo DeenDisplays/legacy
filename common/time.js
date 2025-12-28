@@ -77,11 +77,12 @@ function setTimes(coordinates, timezone, offset, givenMethod, ishaFixedHour, ish
 
  
   times = adjustIshaTime(times, ishaFixedHour, ishaFixedMinute);
-  
-  // If fixed Asr time parameters are provided, adjust Asr iqaamah accordingly.
-  if (typeof asrFixedHour !== 'undefined' && typeof asrFixedMinute !== 'undefined') {
+
+  // If fixed Asr time parameters are provided and the current day is Friday, adjust Asr iqaamah accordingly.
+  if (date.getDay() == 5 && typeof asrFixedHour !== 'undefined' && typeof asrFixedMinute !== 'undefined') {
     times = adjustAsrTime(times, athanTimes, asrFixedHour, asrFixedMinute);
   }
+  
 
   prayers.map(p => $("#" + p + "Time").html(times[p].toUpperCase()));
 
