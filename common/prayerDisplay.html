@@ -556,6 +556,17 @@
          */
         function getFormattedHijriDate(adjustment) {
             try {
+                // Check if we are past Maghrib to advance the Hijri date
+                if (prayerTimes && prayerTimes.maghrib) {
+                    const now = new Date();
+                    const [h, m] = prayerTimes.maghrib.split(':').map(Number);
+                    const maghribDate = new Date(now);
+                    maghribDate.setHours(h, m, 0, 0);
+
+                    if (now >= maghribDate) {
+                        adjustment += 1;
+                    }
+                }
                 return getIslamicDate(adjustment);
             } catch (e) {
                 console.error("Error converting to Hijri date:", e);
